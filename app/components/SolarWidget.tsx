@@ -18,7 +18,7 @@ export default function SolarWidget() {
             custo_kwp: 4800,
             producao_kwp: 145,
             taxa_economia: 0.95,
-            whatsapp: "5511988160797", // Atualize com o número correto da Mavinic
+            whatsapp: "5544988160797", // Atualize com o número correto da Mavinic
             webhook: "https://hook.us2.make.com/ckj3xivqkmdxvk90tycyiyp8muxm0iu9", // Atualize com o webhook correto
             cor_primaria: "#1e3a5f", 
             cor_secundaria: "#2ecc71"
