@@ -212,7 +212,7 @@ export default function LeadForm(): React.JSX.Element {
                   Precisa de uma resposta rápida? Fale agora com um especialista 👇
                 </p>
                 <a 
-                  href="https://wa.me/5511999999999" 
+                  href="https://wa.me/5544988160797" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 bg-green-500/10 hover:bg-green-500/20 text-green-500 border border-green-500/20 px-8 py-4 rounded-2xl text-sm font-bold transition-all duration-300 active:scale-95"
