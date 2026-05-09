@@ -46,43 +46,55 @@
     const style = document.createElement('style');
     style.textContent = `
         :root {
-            --scp-primary: ${config.cor_primaria};
-            --scp-secondary: ${config.cor_secundaria};
-            --scp-bg-glass: rgba(255, 255, 255, 0.1);
-            --scp-bg-glass-dark: rgba(30, 58, 95, 0.05);
-            --scp-text-dark: #1e3a5f;
-            --scp-text-light: #546e7a;
+            --scp-primary: ${config.cor_primaria || '#D4AF37'};
+            --scp-secondary: ${config.cor_secundaria || '#F5C518'};
+            --scp-bg-base: #0a0a0a;
+            --scp-bg-glass: rgba(20, 20, 20, 0.6);
+            --scp-bg-glass-input: rgba(255, 255, 255, 0.03);
+            --scp-bg-glass-result: rgba(255, 255, 255, 0.02);
+            --scp-border-glass: rgba(255, 255, 255, 0.08);
+            --scp-border-focus: rgba(212, 175, 55, 0.4);
+            --scp-text-dark: #ffffff;
+            --scp-text-light: #a0a0a0;
             --scp-error: #ff4d4d;
-            --scp-whatsapp: #25D366;
-            --scp-shadow: 0 12px 40px rgba(30, 58, 95, 0.15);
-            --scp-radius: 16px;
+            --scp-whatsapp: #1b4d3e;
+            --scp-whatsapp-hover: #236350;
+            --scp-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            --scp-glow: 0 0 20px rgba(212, 175, 55, 0.15);
+            --scp-glow-strong: 0 0 30px rgba(212, 175, 55, 0.3);
+            --scp-radius: 20px;
         }
         .scp-calculator-container { font-family: 'Inter', sans-serif; max-width: 600px; margin: 1rem auto; color: var(--scp-text-dark); }
-        .scp-card { background: #fff; border-radius: var(--scp-radius); padding: 2rem; box-shadow: var(--scp-shadow); border: 1px solid rgba(0,0,0,0.05); position: relative; overflow: hidden; }
-        .scp-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem; text-align: center; background: linear-gradient(45deg, var(--scp-primary), var(--scp-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .scp-subtitle { font-size: 0.9rem; color: var(--scp-text-light); text-align: center; margin-bottom: 1.5rem; }
-        .scp-form-group { margin-bottom: 1rem; }
-        .scp-form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--scp-text-dark); }
-        .scp-form-group input { width: 100%; padding: 0.7rem 1rem; border: 2px solid #eee; border-radius: 10px; font-size: 1rem; box-sizing: border-box; transition: all 0.3s; }
-        .scp-form-group input:focus { border-color: var(--scp-primary); outline: none; box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1); }
-        .scp-input-error { border-color: var(--scp-error) !important; background: rgba(255,77,77,0.05); }
-        .scp-error-message { color: var(--scp-error); font-size: 0.8rem; margin-bottom: 1rem; padding: 0.5rem; background: rgba(255,77,77,0.1); border-radius: 8px; text-align: center; }
-        .scp-btn-primary { width: 100%; padding: 0.9rem; border: none; border-radius: 10px; background: linear-gradient(45deg, var(--scp-primary), #2c5282); color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 4px 15px rgba(30, 58, 95, 0.2); }
-        .scp-btn-primary:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.1); }
-        .scp-btn-primary:disabled { opacity: 0.8; cursor: not-allowed; }
-        .scp-results-section { margin-top: 2rem; animation: scp-fade-in 0.4s ease-out forwards; }
-        @keyframes scp-fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .scp-results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1.5rem; }
-        .scp-result-item { background: var(--scp-bg-glass-dark); padding: 1rem; border-radius: 10px; text-align: center; }
-        .scp-result-highlight { grid-column: span 2; background: linear-gradient(45deg, rgba(30,58,95,0.03), rgba(46,204,113,0.03)); border: 1px solid var(--scp-primary); }
-        .scp-result-label { font-size: 0.75rem; color: var(--scp-text-light); text-transform: uppercase; margin-bottom: 0.2rem; }
-        .scp-result-value { font-size: 1.1rem; font-weight: 800; }
-        .scp-result-highlight .scp-result-value { font-size: 1.6rem; color: var(--scp-primary); }
-        .scp-btn-whatsapp { display: flex; justify-content: center; align-items: center; gap: 10px; background: var(--scp-whatsapp); color: #fff; text-decoration: none; padding: 0.9rem; border-radius: 10px; font-weight: 700; transition: 0.3s; }
-        .scp-btn-whatsapp:hover { filter: brightness(1.1); transform: scale(1.02); color: #fff; }
-        .scp-pulse-animation { animation: scp-pulse 2s infinite; }
-        @keyframes scp-pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
-        .scp-loader { border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 2px solid #fff; width: 16px; height: 16px; animation: scp-spin 1s linear infinite; }
+        .scp-card { background: var(--scp-bg-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: var(--scp-radius); padding: 2.5rem 2rem; box-shadow: var(--scp-shadow); border: 1px solid var(--scp-border-glass); position: relative; overflow: hidden; }
+        .scp-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; text-align: center; background: linear-gradient(135deg, var(--scp-secondary), var(--scp-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: var(--scp-glow); letter-spacing: -0.5px; }
+        .scp-subtitle { font-size: 0.95rem; color: var(--scp-text-light); text-align: center; margin-bottom: 2rem; font-weight: 400; }
+        .scp-form-group { margin-bottom: 1.2rem; }
+        .scp-form-group label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--scp-text-light); letter-spacing: 0.5px; text-transform: uppercase; }
+        .scp-form-group input { width: 100%; padding: 0.9rem 1.2rem; background: var(--scp-bg-glass-input); border: 1px solid var(--scp-border-glass); border-radius: 12px; font-size: 1rem; color: #fff; box-sizing: border-box; transition: all 0.3s ease; }
+        .scp-form-group input::placeholder { color: rgba(255,255,255,0.2); }
+        .scp-form-group input:focus { border-color: var(--scp-border-focus); outline: none; box-shadow: var(--scp-glow); background: rgba(255,255,255,0.05); }
+        .scp-input-error { border-color: var(--scp-error) !important; background: rgba(255,77,77,0.05) !important; }
+        .scp-error-message { color: var(--scp-error); font-size: 0.85rem; margin-bottom: 1.2rem; padding: 0.8rem; background: rgba(255,77,77,0.1); border-radius: 10px; border: 1px solid rgba(255,77,77,0.2); text-align: center; font-weight: 500; }
+        .scp-btn-primary { width: 100%; padding: 1rem; margin-top: 0.5rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--scp-secondary), var(--scp-primary)); color: #111; font-size: 1.05rem; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); box-shadow: var(--scp-glow); text-transform: uppercase; letter-spacing: 1px; }
+        .scp-btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--scp-glow-strong); filter: brightness(1.1); }
+        .scp-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; filter: grayscale(1); }
+        .scp-results-section { margin-top: 2.5rem; animation: scp-fade-in 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; border-top: 1px solid var(--scp-border-glass); padding-top: 2rem; }
+        @keyframes scp-fade-in { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .scp-results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+        .scp-result-item { background: var(--scp-bg-glass-result); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--scp-border-glass); text-align: center; transition: transform 0.3s ease; }
+        .scp-result-item:hover { transform: translateY(-2px); background: rgba(255,255,255,0.04); }
+        .scp-result-highlight { grid-column: span 2; background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(212,175,55,0.02)); border: 1px solid var(--scp-border-focus); position: relative; overflow: hidden; padding: 2rem 1.2rem; box-shadow: inset 0 0 20px rgba(212,175,55,0.02); }
+        .scp-result-highlight::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--scp-primary), transparent); opacity: 0.5; }
+        .scp-result-label { font-size: 0.75rem; color: var(--scp-text-light); text-transform: uppercase; margin-bottom: 0.4rem; letter-spacing: 0.5px; font-weight: 500; display: block; }
+        .scp-result-value { font-size: 1.2rem; font-weight: 700; color: #fff; }
+        .scp-result-highlight .scp-result-label { color: var(--scp-primary); font-size: 0.85rem; letter-spacing: 1px; font-weight: 600; }
+        .scp-result-highlight .scp-result-value { font-size: 2.2rem; color: var(--scp-primary); text-shadow: 0 0 15px rgba(212,175,55,0.3); font-weight: 800; line-height: 1.2; }
+        .scp-btn-whatsapp { display: flex; justify-content: center; align-items: center; gap: 12px; background: var(--scp-whatsapp); color: #fff; text-decoration: none; padding: 1rem; border-radius: 12px; font-weight: 600; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
+        .scp-btn-whatsapp:hover { background: var(--scp-whatsapp-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(27, 77, 62, 0.3); }
+        .scp-btn-whatsapp svg { width: 22px; height: 22px; fill: currentColor; }
+        .scp-pulse-animation { animation: scp-pulse 2.5s infinite cubic-bezier(0.66, 0, 0, 1); }
+        @keyframes scp-pulse { 0% { box-shadow: 0 0 0 0 rgba(27, 77, 62, 0.6); } 70% { box-shadow: 0 0 0 12px rgba(27, 77, 62, 0); } 100% { box-shadow: 0 0 0 0 rgba(27, 77, 62, 0); } }
+        .scp-loader { border: 2px solid rgba(0,0,0,0.1); border-radius: 50%; border-top: 2px solid #111; width: 18px; height: 18px; animation: scp-spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; }
         @keyframes scp-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     `;
     document.head.appendChild(style);
@@ -97,15 +109,15 @@
     target.innerHTML = `
         <div class="scp-calculator-container">
             <div class="scp-card">
-                <h2 class="scp-title">Simulador Mavinic Solar</h2>
-                <p class="scp-subtitle">Descubra sua economia em poucos segundos.</p>
+                <h2 class="scp-title">Simulador Premium</h2>
+                <p class="scp-subtitle">Descubra o potencial de economia do seu imóvel.</p>
                 <div class="scp-form-group">
                     <label>Seu Nome Completo</label>
-                    <input type="text" id="userName" placeholder="Ex: João Silva">
+                    <input type="text" id="userName" placeholder="Ex: João da Silva" autocomplete="name">
                 </div>
                 <div class="scp-form-group">
-                    <label>Valor da conta mensal (R$)</label>
-                    <input type="number" id="billValue" placeholder="Ex: 500">
+                    <label>Valor médio da conta de luz (R$)</label>
+                    <input type="number" id="billValue" placeholder="Ex: 500" inputmode="numeric">
                 </div>
                 <div id="scp-error-msg" class="scp-error-message" style="display: none;"></div>
                 <button id="calculateBtn" class="scp-btn-primary">
@@ -123,20 +135,21 @@
                             <span id="yearlySavings" class="scp-result-value">R$ 0,00</span>
                         </div>
                         <div class="scp-result-item">
-                            <span class="scp-result-label">Sistema Sugerido</span>
+                            <span class="scp-result-label">Sistema Estimado</span>
                             <span id="systemSize" class="scp-result-value">0,00 kWp</span>
                         </div>
                         <div class="scp-result-item">
-                            <span class="scp-result-label">Investimento Estimado</span>
+                            <span class="scp-result-label">Investimento Base</span>
                             <span id="estInvestment" class="scp-result-value">R$ 0,00</span>
                         </div>
                         <div class="scp-result-item scp-result-highlight">
-                            <span class="scp-result-label">Tempo de Retorno (Payback)</span>
+                            <span class="scp-result-label">Retorno do Investimento (Payback)</span>
                             <span id="payback" class="scp-result-value">0 anos</span>
                         </div>
                     </div>
                     <a href="#" class="scp-btn-whatsapp" target="_blank" style="display: none;">
-                        Falar com Especialista no WhatsApp
+                        <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/></svg>
+                        Falar com Especialista Mavinic
                     </a>
                 </div>
             </div>
