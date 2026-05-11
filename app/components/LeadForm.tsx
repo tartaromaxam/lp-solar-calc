@@ -20,12 +20,21 @@ export default function LeadForm(): React.JSX.Element {
     setStatus({ type: null, message: "" });
 
     try {
-      console.log("[Solar-Leads] Enviando dados para o Railway...", formData);
-      const response = await fetch("https://bot-telegram-production-0a8d.up.railway.app/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      console.log("[Solar-Leads] Enviando dados para as automações...", formData);
+      
+      // Envia para o Railway e Make em paralelo
+      const [response, makeResponse] = await Promise.all([
+        fetch("https://bot-telegram-production-0a8d.up.railway.app/api/leads", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }),
+        fetch("https://hook.us2.make.com/ckj3xivqkmdxvk90tycyiyp8muxm0iu9", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        })
+      ]);
 
       const result = await response.json().catch(() => ({ success: false, error: "Resposta inválida do servidor" }));
 
