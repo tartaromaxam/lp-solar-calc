@@ -29,7 +29,7 @@ export default function LeadForm(): React.JSX.Element {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         }),
-        fetch("https://hook.us2.make.com/ckj3xivqkmdxvk90tycyiyp8muxm0iu9", {
+        fetch("https://hook.us2.make.com/uenwaqqn6cjyrx754med5l5hcarhby46", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
