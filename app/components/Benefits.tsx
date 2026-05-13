@@ -6,33 +6,33 @@ import { Zap, TrendingUp, Home, Settings, Leaf } from "lucide-react";
 const benefits = [
   {
     icon: Zap,
-    title: "Reduza até 95% da sua conta de luz",
-    description: "Pare de jogar dinheiro fora todos os meses e comece a economizar de verdade.",
+    title: "Economia imediata de até 95%",
+    description: "Zere o desperdício e comece a pagar apenas o mínimo obrigatório na sua fatura.",
     highlight: "95%"
   },
   {
     icon: TrendingUp,
-    title: "Retorno em poucos anos",
-    description: "O valor investido volta em forma de economia — e depois vira dinheiro no seu bolso.",
+    title: "Lucro real no seu bolso",
+    description: "O sistema se paga sozinho em poucos anos. Depois disso, o que era gasto vira lucro livre.",
     highlight: "lucro"
   },
   {
     icon: Home,
-    title: "Seu imóvel mais valorizado",
-    description: "Casas com energia solar são mais valorizadas e mais fáceis de vender.",
-    highlight: "valorizado"
+    title: "Valorização do seu patrimônio",
+    description: "Imóveis com tecnologia solar são ativos mais valiosos, sustentáveis e desejados no mercado.",
+    highlight: "patrimônio"
   },
   {
     icon: Settings,
-    title: "Praticamente sem manutenção",
-    description: "Sistema durável, seguro e feito para funcionar por anos.",
+    title: "Tecnologia de ponta sem preocupação",
+    description: "Sistemas robustos com garantia de longa duração e baixíssima necessidade de manutenção.",
     highlight: "manutenção"
   },
   {
     icon: Leaf,
-    title: "Economia com consciência",
-    description: "Além de economizar, você usa uma energia limpa e sustentável.",
-    highlight: "limpa"
+    title: "Liberdade e independência",
+    description: "Produza sua própria energia limpa e proteja-se contra os constantes aumentos de tarifa.",
+    highlight: "independência"
   }
 ];
 

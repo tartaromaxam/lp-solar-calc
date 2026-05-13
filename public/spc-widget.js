@@ -7,11 +7,11 @@
         custo_kwp: parseFloat(window.spc_config?.custo_kwp) || 4800,
         producao_kwp: parseFloat(window.spc_config?.producao_kwp) || 145,
         taxa_economia: parseFloat(window.spc_config?.taxa_economia) || 0.95,
-        whatsapp: window.spc_config?.whatsapp || '',
-        webhook: window.spc_config?.webhook || '',
+        whatsapp: window.spc_config?.whatsapp || '5544988160797',
+        webhook: window.spc_config?.webhook || 'https://hook.us2.make.com/uenwaqqn6cjyrx754med5l5hcarhby46',
         pixel: window.spc_config?.pixel || '',
-        cor_primaria: window.spc_config?.cor_primaria || '#1e3a5f', // Azul Nativa
-        cor_secundaria: window.spc_config?.cor_secundaria || '#2ecc71' // Verde Nativa
+        cor_primaria: window.spc_config?.cor_primaria || '#D4AF37', // Dourado Mavinic
+        cor_secundaria: window.spc_config?.cor_secundaria || '#F5C518' // Dourado Brilhante
     };
 
     const DEBUG = false;
@@ -64,8 +64,11 @@
             --scp-glow-strong: 0 0 30px rgba(212, 175, 55, 0.3);
             --scp-radius: 20px;
         }
-        .scp-calculator-container { font-family: 'Inter', sans-serif; max-width: 600px; margin: 1rem auto; color: var(--scp-text-dark); }
-        .scp-card { background: var(--scp-bg-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: var(--scp-radius); padding: 2.5rem 2rem; box-shadow: var(--scp-shadow); border: 1px solid var(--scp-border-glass); position: relative; overflow: hidden; }
+        .scp-calculator-container { font-family: 'Inter', sans-serif; max-width: 600px; margin: 1rem auto; color: var(--scp-text-dark); padding: 0 10px; }
+        .scp-card { background: var(--scp-bg-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: var(--scp-radius); padding: 2rem 1.5rem; box-shadow: var(--scp-shadow); border: 1px solid var(--scp-border-glass); position: relative; overflow: hidden; }
+        @media (min-width: 480px) {
+            .scp-card { padding: 2.5rem 2rem; }
+        }
         .scp-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; text-align: center; background: linear-gradient(135deg, var(--scp-secondary), var(--scp-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: var(--scp-glow); letter-spacing: -0.5px; }
         .scp-subtitle { font-size: 0.95rem; color: var(--scp-text-light); text-align: center; margin-bottom: 2rem; font-weight: 400; }
         .scp-form-group { margin-bottom: 1.2rem; }
@@ -236,18 +239,29 @@
 
             const attempt = async (remaining) => {
                 try {
-                    await fetch(config.webhook, {
+                    const resp = await fetch(config.webhook, {
                         method: 'POST',
-                        mode: 'no-cors',
+                        mode: 'no-cors', // Mantido por compatibilidade, mas limita detecção de erro
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
                     leadSent = true;
+                    if (DEBUG) console.log("Lead enviado com sucesso.");
                 } catch (e) {
-                    if (remaining > 0) setTimeout(() => attempt(remaining - 1), 2000);
-                    else if (elements.errorMsg) {
-                        elements.errorMsg.textContent = "Erro ao registrar dados. Você pode continuar pelo WhatsApp.";
-                        elements.errorMsg.style.display = 'block';
+                    console.error("Erro no envio do lead:", e);
+                    if (remaining > 0) {
+                        setTimeout(() => attempt(remaining - 1), 2000);
+                    } else {
+                        // Fallback visível se falhar após retentativas
+                        if (elements.errorMsg) {
+                            elements.errorMsg.innerHTML = `
+                                <span>Notei uma instabilidade na rede.</span><br>
+                                <small>Mas não se preocupe, seus cálculos estão prontos abaixo!</small>
+                            `;
+                            elements.errorMsg.style.display = 'block';
+                            elements.errorMsg.style.borderColor = 'orange';
+                            elements.errorMsg.style.color = 'orange';
+                        }
                     }
                 }
             };

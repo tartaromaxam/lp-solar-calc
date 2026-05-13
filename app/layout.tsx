@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolarMax | Economize até 95% na sua conta de luz com energia solar",
-  description: "A solução mais inteligente para economizar e valorizar seu imóvel com energia limpa de alta tecnologia.",
+  title: "Solar Pro Mavinic | Simulador de Economia Solar Inteligente",
+  description: "Descubra quanto você pode economizar com energia solar. Simulação gratuita e instantânea para sua residência ou empresa.",
 };
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="pt-BR"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

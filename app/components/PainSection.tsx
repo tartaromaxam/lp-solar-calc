@@ -16,8 +16,8 @@ export default function PainSection(): React.JSX.Element {
             className="text-center"
           >
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-white leading-tight">
-              Você também sente que a <br />
-              <span className="text-red-500/80 font-semibold italic">conta de luz só aumenta?</span>
+              Por que continuar <br />
+              <span className="text-red-500/80 font-semibold italic">financiando a concessionária?</span>
             </h2>
           </motion.div>
 
@@ -25,24 +25,24 @@ export default function PainSection(): React.JSX.Element {
           <div className="flex flex-col gap-8 md:gap-12">
             {[
               {
-                text: "Todo mês é a mesma coisa: a conta chega mais ",
-                highlight: "caro",
-                after: " e pesa no seu bolso."
+                text: "Todo mês a mesma indignação: a conta sobe e o seu ",
+                highlight: "poder de compra",
+                after: " diminui."
               },
               {
-                text: "Mesmo economizando, parece que nunca faz diferença.",
+                text: "Economizar no banho ou desligar o ar-condicionado não resolve o problema estrutural.",
                 highlight: "",
                 after: ""
               },
               {
-                text: "Enquanto isso, você continua pagando ",
-                highlight: "caro",
-                after: " por algo que poderia custar muito menos."
+                text: "Você está pagando caro por algo que o ",
+                highlight: "sol te entrega de graça",
+                after: " todos os dias."
               },
               {
-                text: "A verdade é simples: você está pagando ",
-                highlight: "mais do que deveria",
-                after: " todos os meses — sem perceber o quanto está perdendo."
+                text: "A verdade é dura: cada mês sem energia solar é ",
+                highlight: "dinheiro que nunca mais volta",
+                after: " para o seu bolso."
               }
             ].map((block, i) => (
               <motion.div
@@ -76,7 +76,7 @@ export default function PainSection(): React.JSX.Element {
             className="text-center pt-8 border-t border-white/5"
           >
             <p className="text-lg md:text-xl text-solar/80 font-medium tracking-wide uppercase">
-              A verdade é simples: você está pagando mais do que deveria todos os meses.
+              O sol é seu. A energia também deveria ser.
             </p>
             <div className="mt-4 flex justify-center">
               <motion.div 

@@ -1,0 +1,8 @@
+{
+    "project_name": "Solar Pro Mavinic",
+    "gsd_version": "1.0",
+    "workflow_preferences": {
+        "auto_research": false,
+        "require_plan_approval": true
+    }
+}

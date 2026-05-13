@@ -20,39 +20,43 @@ export default function LeadForm(): React.JSX.Element {
     setStatus({ type: null, message: "" });
 
     try {
-      console.log("[Solar-Leads] Enviando dados para as automações...", formData);
+      console.log("[Solar-Leads] Enviando dados de forma resiliente...", formData);
       
-      // Envia para o Railway e Make em paralelo
-      const [response, makeResponse] = await Promise.all([
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
+
+      // Envia para o Railway e Make em paralelo (AllSettled ignora falhas individuais)
+      const results = await Promise.allSettled([
         fetch("https://bot-telegram-production-0a8d.up.railway.app/api/leads", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
+          signal: controller.signal
         }),
         fetch("https://hook.us2.make.com/uenwaqqn6cjyrx754med5l5hcarhby46", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
+          signal: controller.signal
         })
       ]);
 
-      const result = await response.json().catch(() => ({ success: false, error: "Resposta inválida do servidor" }));
+      clearTimeout(timeoutId);
 
-      if (response.ok && result.success) {
-        console.log("✅ [Solar-Leads] Sucesso!");
+      // Considera sucesso se qualquer um dos dois der certo
+      const anySuccess = results.some(r => r.status === 'fulfilled' && r.value.ok);
+
+      if (anySuccess) {
+        console.log("✅ [Solar-Leads] Sucesso (pelo menos um endpoint respondeu)!");
         setSubmitted(true);
       } else {
-        console.error("❌ [Solar-Leads] Erro na resposta:", result);
-        setStatus({ 
-          type: 'error', 
-          message: result.error || "Erro ao processar simulação. Tente novamente em instantes." 
-        });
+        throw new Error("Falha na conexão com os servidores");
       }
     } catch (error: any) {
-      console.error("❌ [Solar-Leads] Erro de conexão/CORS:", error);
+      console.error("❌ [Solar-Leads] Erro crítico:", error);
       setStatus({ 
         type: 'error', 
-        message: "Erro de conexão. Verifique seu sinal de internet ou WiFi." 
+        message: "Houve uma instabilidade temporária. Tente novamente ou fale conosco pelo WhatsApp abaixo." 
       });
     } finally {
       setLoading(false);

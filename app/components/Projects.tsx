@@ -13,7 +13,7 @@ const caseStudies = [
     after: "68,00",
     savings: "92%",
     image: "/residential-proof.png",
-    benefits: ["Economia real na conta de luz", "Redução imediata de custos", "Retorno previsível"]
+    benefits: ["Redução drástica na fatura", "Instalação em 48h", "Valorização imediata do imóvel"]
   },
   {
     category: "Comercial",
@@ -23,7 +23,7 @@ const caseStudies = [
     after: "220,00",
     savings: "93%",
     image: "/commercial-proof.png",
-    benefits: ["Economia real na conta de luz", "Redução imediata de custos", "Retorno previsível"]
+    benefits: ["Redução de custos fixos", "Selo de empresa sustentável", "Retorno sobre investimento acelerado"]
   },
   {
     category: "Industrial",
@@ -33,7 +33,7 @@ const caseStudies = [
     after: "980,00",
     savings: "93%",
     image: "/industrial-proof.png",
-    benefits: ["Economia real na conta de luz", "Redução imediata de custos", "Retorno previsível"]
+    benefits: ["Imunidade à inflação energética", "Alta produtividade com custo zero", "Sistema de alta potência"]
   }
 ];
 
@@ -112,9 +112,9 @@ export default function Projects(): React.JSX.Element {
                   </div>
                   
                   {/* Savings Badge */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-solar/10 border border-solar/20 px-4 py-1.5 rounded-full flex items-center gap-2 backdrop-blur-sm">
-                    <TrendingDown className="w-4 h-4 text-solar" />
-                    <span className="text-solar font-black text-sm">Economia: {study.savings}</span>
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/80 border border-solar/30 w-24 h-24 rounded-full flex flex-col items-center justify-center backdrop-blur-md shadow-[0_0_30px_rgba(212,175,55,0.2)] z-20">
+                    <span className="text-solar/70 font-bold text-[9px] uppercase tracking-tighter mb-0.5">Economia</span>
+                    <span className="text-solar font-black text-2xl leading-none">{study.savings}</span>
                   </div>
 
                   <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">

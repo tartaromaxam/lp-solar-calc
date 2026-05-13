@@ -43,7 +43,7 @@ export default function Hero(): React.JSX.Element {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-white leading-[1.1] tracking-tight mb-8 max-w-[950px]"
           >
-            Cansado de pagar <span className="text-solar italic font-semibold">caro na conta</span> de luz todos os meses?
+            Sua conta de luz <span className="text-solar italic font-semibold text-white">reduzida em até 95%</span> com a inteligência da Mavinic
           </motion.h1>
 
           {/* Subheadline */}
@@ -53,7 +53,7 @@ export default function Hero(): React.JSX.Element {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-white/60 text-lg md:text-xl lg:text-2xl font-light mb-12 max-w-[800px] leading-relaxed"
           >
-            Descubra como reduzir <span className="text-white font-medium">até 95% da sua conta</span> com energia solar — sem complicação e com projeto personalizado.
+            Descubra como transformar o sol em <span className="text-white font-medium">economia real</span> para sua casa ou empresa com projetos personalizados e instalação completa.
           </motion.p>
 
           {/* CTAs */}
