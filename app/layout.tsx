@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const GTM_ID = "GTM-WDGT2XPV";
 
 export const metadata: Metadata = {
   title: "Solar Pro Mavinic | Simulador de Economia Solar Inteligente",
