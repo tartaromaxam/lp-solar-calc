@@ -16,11 +16,15 @@ graph TD
     G --> H[window.spc_config]
     G --> I[DOM Injection]
     
-    E --> J[Railway API]
     E --> K[Make.com Webhook]
+    E --> N[/api/leads]
     
     G --> L[Make.com Webhook]
     G --> M[WhatsApp API]
+    G --> N
+    
+    N --> O[Google Sheets]
+    N --> P[Telegram Bot]
 ```
 
 ## System Layers
@@ -36,7 +40,8 @@ graph TD
 - **Visuals**: Uses Glassmorphism and CSS animations to match the premium feel of the LP.
 
 ### 3. Data & Automation Layer
-- **Lead Processing**: Leads are sent to Make.com for CRM integration and Railway for database/notifications.
+- **Lead Processing**: Leads are sent to Make.com for specialized CRM automation.
+- **Internal Sheets Connector**: The `/api/leads` route (Next.js) provides a direct, cost-free integration with Google Sheets and Telegram.
 - **Analytics**: Pushes events to GTM (DataLayer) for conversion tracking.
 
 ## Key Files

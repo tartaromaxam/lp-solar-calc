@@ -4,7 +4,7 @@ import { JWT } from "google-auth-library";
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, whatsapp, billAmount } = await req.json();
+    const { name, whatsapp, billAmount, companyName } = await req.json();
 
     console.log(`[API Leads] Recebendo lead: ${name} (${whatsapp})`);
 
@@ -35,10 +35,14 @@ export async function POST(req: NextRequest) {
     const dataHora = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
     
     // Colunas: Nome | WhatsApp | Mensagem/Valor | Origem | Data/Hora
+    const infoAdicional = billAmount 
+      ? `Simulação: R$ ${billAmount}` 
+      : (companyName ? `Empresa: ${companyName}` : "Consulta Direta");
+
     await sheet.addRow([
       name, 
       whatsapp, 
-      `Total Conta: R$ ${billAmount}`, 
+      infoAdicional, 
       "SITE_SOLAR", 
       dataHora
     ]);
@@ -50,11 +54,14 @@ export async function POST(req: NextRequest) {
     const chatId = process.env.TELEGRAM_CHAT_ID;
     
     if (botToken && chatId) {
-      const message = `🚀 *NOVO LEAD DO SITE!*\n\n` +
+      let message = `🚀 *NOVO LEAD DO SITE!*\n\n` +
                       `👤 *Nome:* ${name}\n` +
-                      `📱 *WhatsApp:* ${whatsapp}\n` +
-                      `💰 *Conta Mensal:* R$ ${billAmount}\n` +
-                      `⏰ *Data:* ${dataHora}`;
+                      `📱 *WhatsApp:* ${whatsapp}\n`;
+      
+      if (billAmount) message += `💰 *Conta Mensal:* R$ ${billAmount}\n`;
+      if (companyName) message += `🏢 *Empresa:* ${companyName}\n`;
+      
+      message += `⏰ *Data:* ${dataHora}`;
 
       fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: "POST",

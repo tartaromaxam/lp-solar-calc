@@ -25,9 +25,9 @@ export default function LeadForm(): React.JSX.Element {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
 
-      // Envia para o Railway e Make em paralelo (AllSettled ignora falhas individuais)
+      // Envia para o Backend Interno (Vercel) e Make em paralelo
       const results = await Promise.allSettled([
-        fetch("https://bot-telegram-production-0a8d.up.railway.app/api/leads", {
+        fetch("/api/leads", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
@@ -225,7 +225,7 @@ export default function LeadForm(): React.JSX.Element {
                   Precisa de uma resposta rápida? Fale agora com um especialista 👇
                 </p>
                 <a 
-                  href="https://wa.me/5544988160797" 
+                  href="https://wa.me/5544988160797?text=Olá!%20Vi%20o%20site%20da%20Solar%20Pro%20Mavinic%20e%20gostaria%20de%20solicitar%20uma%20simulação%20de%20energia%20solar." 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 bg-green-500/10 hover:bg-green-500/20 text-green-500 border border-green-500/20 px-8 py-4 rounded-2xl text-sm font-bold transition-all duration-300 active:scale-95"

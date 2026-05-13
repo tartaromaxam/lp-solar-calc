@@ -15,7 +15,7 @@ This project combines a high-fidelity **Next.js Landing Page** with a modular **
 - **Framework**: [Next.js 15](https://nextjs.org)
 - **Styling**: Tailwind CSS, Vanilla CSS (Widget)
 - **Animations**: Framer Motion
-- **Integrations**: Make.com (Webhooks), Railway (Bot API)
+- **Integrations**: Make.com (Webhooks), Vercel API (Google Sheets & Telegram)
 
 ## 📖 Documentation for AI Agents
 If you are an AI working on this project, please read these files first:
@@ -39,4 +39,26 @@ If you are an AI working on this project, please read these files first:
 ## 🌐 Deployment
 The project is configured for deployment on **Vercel**. 
 Subdomain: `solar.mavinic.com.br`
+
+### Environment Variables
+Ensure the following variables are set in Vercel:
+- `TELEGRAM_TOKEN`: Bot token for notifications.
+- `TELEGRAM_CHAT_ID`: Destination chat ID.
+- `GOOGLE_SERVICE_ACCOUNT_EMAIL`: Service account for Sheets.
+- `GOOGLE_PRIVATE_KEY`: Private key (replace `\n` with actual newlines).
+- `GOOGLE_SHEET_ID`: Target Spreadsheet ID.
+- `NEXT_PUBLIC_API_URL`: (Optional) Custom API endpoint if not using internal routes.
+
+## 🛠️ Maintenance & Updates
+- **Widget Configuration**: Business rules (rates, costs) are managed in `app/components/SolarWidget.tsx` via `window.spc_config`.
+- **Lead Webhooks**: Webhooks are defined in both `LeadForm.tsx` and `SolarWidget.tsx`. Ensure these match your CRM/Automation tool.
+- **Cache Control**: The `vercel.json` file is configured to serve `spc-widget.js` with `max-age=0` to ensure users always receive the latest version without aggressive CDN caching.
+
+## 📈 Conversion Funnel
+1. **Awareness**: SEO-optimized landing page.
+2. **Engagement**: Interactive simulation via `spc-widget.js`.
+3. **Capture**: 
+   - Primary: Calculation results lead to WhatsApp with pre-filled context.
+   - Secondary: LeadForm at the bottom for direct consultations.
+4. **Processing**: Automated delivery to Google Sheets (via Railway/Make) and Telegram notifications.
 

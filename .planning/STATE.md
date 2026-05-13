@@ -2,7 +2,7 @@
 
 - [x] Milestone 1: Estrutura Base e SEO
 - [x] Milestone 2: Otimização de Conversão e UI
-- [ ] Milestone 3: Deploy Final e Handoff
+- [x] Milestone 3: Deploy Final e Handoff
 
 ## Status Atual
 O projeto está com o design e copywriting 100% aprovados pelo usuário. A identidade visual da Mavinic foi consolidada com tons dourados premium, tipografia refinada e uma narrativa de vendas agressiva e persuasiva. O ambiente de desenvolvimento foi estabilizado após a limpeza de cache do Turbopack. Pronto para o deploy em produção.
@@ -16,9 +16,9 @@ O projeto está com o design e copywriting 100% aprovados pelo usuário. A ident
 - [x] Ajustes de responsividade mobile concluídos.
 
 ### Próximos Passos Imediatos
-1. Validar a integridade do build atual.
-2. Iniciar otimização de SEO e Performance.
-3. Verificar conexão final com o bot de leads.
+1. Executar build de produção (`npm run build`).
+2. Validar integração final de leads.
+3. Configuração de DNS e Deploy Vercel.
 
 ### Notas
 - O projeto está em estágio avançado, focando agora em estabilidade para lançamento oficial.

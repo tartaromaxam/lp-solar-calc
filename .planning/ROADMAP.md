@@ -21,9 +21,9 @@
 ### Fase 2: Testes de Conversão e UI (COMPLETED)
 - [x] Testar a responsividade em dispositivos móveis (Mobile-First).
 - [x] Revisar as cópias (textos) das seções `Benefits` e `Pain` (Autoridade Mavinic).
-- [x] Integrar Google Analytics / Meta Pixel se solicitado.
+- [] Integrar Google Analytics / Meta Pixel se solicitado.
 
-### Fase 2: Deploy e Documentação Final
-- [ ] Configuração final de domínio (Vercel/Hostinger).
-- [ ] Testes de carga e validação de leads em produção.
-- [ ] Entrega da documentação técnica atualizada.
+### Fase 3: Deploy e Documentação Final (DONE)
+- [x] Configuração final de domínio (Vercel/Hostinger).
+- [x] Testes de carga e validação de leads em produção.
+- [x] Entrega da documentação técnica atualizada.

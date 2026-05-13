@@ -239,12 +239,27 @@
 
             const attempt = async (remaining) => {
                 try {
+                    // 1. Envio para o Webhook Principal (Make.com)
                     const resp = await fetch(config.webhook, {
                         method: 'POST',
-                        mode: 'no-cors', // Mantido por compatibilidade, mas limita detecção de erro
+                        mode: 'no-cors',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
+
+                    // 2. Envio para a API Interna (Vercel) como redundância (se no mesmo domínio)
+                    if (window.location.hostname !== 'localhost' || DEBUG) {
+                        fetch('/api/leads', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                name: data.nome,
+                                whatsapp: data.whatsapp || '',
+                                billAmount: data.valor_conta
+                            })
+                        }).catch(err => console.error("Erro no backup interno:", err));
+                    }
+
                     leadSent = true;
                     if (DEBUG) console.log("Lead enviado com sucesso.");
                 } catch (e) {

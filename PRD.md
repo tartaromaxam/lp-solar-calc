@@ -35,7 +35,7 @@ Create a premium, high-converting solar energy landing page that uses a sophisti
 - **Limit Handling**: Simulation capped for very high bill values (manual consultation redirect).
 
 ### 4.3. Data & Integrations
-- **Lead Redundancy**: Leads must be sent to Make.com and Railway simultaneously.
+- **Lead Redundancy**: Leads must be sent to Make.com and the internal Vercel API simultaneously.
 - **Tracking**: GTM/DataLayer events for every step of the funnel.
 - **WhatsApp Integration**: Dynamic pre-filled messages based on simulation results.
 
