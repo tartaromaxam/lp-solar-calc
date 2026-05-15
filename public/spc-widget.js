@@ -466,26 +466,37 @@
     async function sendLead(name, bill, results) {
         const payload = {
             nome: name,
-            valor_conta: bill,
-            resultados: {
-                kwp: results.kwp.toFixed(2),
-                economia_mensal: results.savingsMonthly.toFixed(2),
-                investimento: results.investment.toFixed(2),
-                payback: results.payback.toFixed(1),
-                economia_25anos: results.total25y.toFixed(2)
-            },
+            valor_conta: Number(bill),
+            economia_mensal: Number(results.savingsMonthly),
+            sistema_kwp: Number(results.kwp),
+            investimento: Number(results.investment),
+            payback: Number(results.payback),
+            economia_25anos: Number(results.total25y),
+            timestamp: new Date().toISOString(),
+            origem: window.location.href,
             utms: Utils.getUTMs(),
-            device: Utils.getDeviceInfo(),
-            timestamp: new Date().toISOString()
+            device: Utils.getDeviceInfo()
         };
 
         try {
+            // 1. Webhook Principal (Make.com)
             await fetch(config.webhook, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
+
+            // 2. Backup Interna (API Local)
+            fetch('/api/leads', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: name,
+                    billAmount: bill
+                })
+            }).catch(err => console.error("Erro no backup interno:", err));
+
         } catch (e) {
             console.error("Lead send failed", e);
         }
