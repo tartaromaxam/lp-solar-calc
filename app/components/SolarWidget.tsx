@@ -20,15 +20,15 @@ export default function SolarWidget() {
             taxa_economia: 0.95,
             whatsapp: "5544988160797", // Atualize com o número correto da Mavinic
             webhook: "https://hook.us2.make.com/uenwaqqn6cjyrx754med5l5hcarhby46", // Atualize com o webhook correto
-            cor_primaria: "#1e3a5f", 
-            cor_secundaria: "#2ecc71"
+            cor_primaria: "#D4AF37", 
+            cor_secundaria: "#F5C518"
           };
         `}
       </Script>
 
       {/* 3. Carregamento do Widget (Equilíbrio Performance/Velocidade) */}
       <Script 
-        src="/spc-widget.js?v=1.1.2" 
+        src="/spc-widget.js?v=1.1.3" 
         strategy="afterInteractive" 
       />
     </section>

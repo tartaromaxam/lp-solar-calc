@@ -151,7 +151,7 @@
         .scp-stat-card { background: rgba(255,255,255,0.03); border: 1px solid var(--scp-border); padding: 1.5rem; border-radius: var(--scp-radius-md); text-align: center; }
         .scp-stat-label { font-size: 0.7rem; color: var(--scp-text-muted); text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
         .scp-stat-value { font-size: 1.25rem; font-weight: 700; color: #fff; }
-        .scp-stat-detail { font-size: 0.75rem; color: var(--scp-primary); margin-top: 0.4rem; display: block; }
+        .scp-stat-detail { font-size: 0.85rem; color: var(--scp-primary); font-weight: 600; margin-top: 0.4rem; display: block; }
 
         /* COMPARISON BLOCK */
         .scp-comparison { margin-bottom: 2.5rem; }
