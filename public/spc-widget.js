@@ -9,14 +9,18 @@
         taxa_economia: parseFloat(window.spc_config?.taxa_economia) || 0.95,
         whatsapp: window.spc_config?.whatsapp || '5544988160797',
         webhook: window.spc_config?.webhook || 'https://hook.us2.make.com/uenwaqqn6cjyrx754med5l5hcarhby46',
-        pixel: window.spc_config?.pixel || '',
-        cor_primaria: window.spc_config?.cor_primaria || '#D4AF37', // Dourado Mavinic
-        cor_secundaria: window.spc_config?.cor_secundaria || '#F5C518' // Dourado Brilhante
+        cor_primaria: window.spc_config?.cor_primaria || '#D4AF37', // Gold Mavinic
+        cor_secundaria: window.spc_config?.cor_secundaria || '#F5C518',
+        inflacao_energetica: 0.08, // 8% ao ano
+        taxa_financiamento: 0.014, // 1.4% ao mês
+        prazo_financiamento: 60, // 60 meses padrão
+        painel_watts: 550,
+        painel_area: 2.58
     };
 
     const DEBUG = false;
 
-    // 2. UTILS & TRACKING
+    // 2. UTILS
     const Utils = {
         trackEvent(event, data = {}) {
             if (DEBUG) console.log(`[Tracking] ${event}`, data);
@@ -39,120 +43,308 @@
                 screen: `${window.screen.width}x${window.screen.height}`,
                 lang: navigator.language
             };
+        },
+        formatBRL(val) {
+            return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
     };
 
-    // 3. CSS INJECTION
+    // 3. CSS INJECTION (Premium SaaS/Tesla Style)
     const style = document.createElement('style');
     style.textContent = `
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
         :root {
-            --scp-primary: ${config.cor_primaria || '#D4AF37'};
-            --scp-secondary: ${config.cor_secundaria || '#F5C518'};
-            --scp-bg-base: #0a0a0a;
-            --scp-bg-glass: rgba(20, 20, 20, 0.6);
-            --scp-bg-glass-input: rgba(255, 255, 255, 0.03);
-            --scp-bg-glass-result: rgba(255, 255, 255, 0.02);
-            --scp-border-glass: rgba(255, 255, 255, 0.08);
-            --scp-border-focus: rgba(212, 175, 55, 0.4);
-            --scp-text-dark: #ffffff;
-            --scp-text-light: #a0a0a0;
-            --scp-error: #ff4d4d;
-            --scp-whatsapp: #1b4d3e;
-            --scp-whatsapp-hover: #236350;
-            --scp-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            --scp-glow: 0 0 20px rgba(212, 175, 55, 0.15);
-            --scp-glow-strong: 0 0 30px rgba(212, 175, 55, 0.3);
-            --scp-radius: 20px;
+            --scp-primary: ${config.cor_primaria};
+            --scp-primary-rgb: 212, 175, 55;
+            --scp-bg-glass: rgba(15, 15, 18, 0.7);
+            --scp-border: rgba(255, 255, 255, 0.08);
+            --scp-text-main: #FFFFFF;
+            --scp-text-muted: #A0A0A0;
+            --scp-radius-lg: 24px;
+            --scp-radius-md: 16px;
+            --scp-shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.4);
+            --scp-glass-shine: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
         }
-        .scp-calculator-container { font-family: 'Inter', sans-serif; max-width: 600px; margin: 1rem auto; color: var(--scp-text-dark); padding: 0 10px; }
-        .scp-card { background: var(--scp-bg-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: var(--scp-radius); padding: 2rem 1.5rem; box-shadow: var(--scp-shadow); border: 1px solid var(--scp-border-glass); position: relative; overflow: hidden; }
-        @media (min-width: 480px) {
-            .scp-card { padding: 2.5rem 2rem; }
+
+        .scp-widget {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--scp-text-main);
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.5;
         }
-        .scp-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; text-align: center; background: linear-gradient(135deg, var(--scp-secondary), var(--scp-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: var(--scp-glow); letter-spacing: -0.5px; }
-        .scp-subtitle { font-size: 0.95rem; color: var(--scp-text-light); text-align: center; margin-bottom: 2rem; font-weight: 400; }
-        .scp-form-group { margin-bottom: 1.2rem; }
-        .scp-form-group label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--scp-text-light); letter-spacing: 0.5px; text-transform: uppercase; }
-        .scp-form-group input { width: 100%; padding: 0.9rem 1.2rem; background: var(--scp-bg-glass-input); border: 1px solid var(--scp-border-glass); border-radius: 12px; font-size: 1rem; color: #fff; box-sizing: border-box; transition: all 0.3s ease; }
-        .scp-form-group input::placeholder { color: rgba(255,255,255,0.2); }
-        .scp-form-group input:focus { border-color: var(--scp-border-focus); outline: none; box-shadow: var(--scp-glow); background: rgba(255,255,255,0.05); }
-        .scp-input-error { border-color: var(--scp-error) !important; background: rgba(255,77,77,0.05) !important; }
-        .scp-error-message { color: var(--scp-error); font-size: 0.85rem; margin-bottom: 1.2rem; padding: 0.8rem; background: rgba(255,77,77,0.1); border-radius: 10px; border: 1px solid rgba(255,77,77,0.2); text-align: center; font-weight: 500; }
-        .scp-btn-primary { width: 100%; padding: 1rem; margin-top: 0.5rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--scp-secondary), var(--scp-primary)); color: #111; font-size: 1.05rem; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); box-shadow: var(--scp-glow); text-transform: uppercase; letter-spacing: 1px; }
-        .scp-btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--scp-glow-strong); filter: brightness(1.1); }
-        .scp-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; filter: grayscale(1); }
-        .scp-results-section { margin-top: 2.5rem; animation: scp-fade-in 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; border-top: 1px solid var(--scp-border-glass); padding-top: 2rem; }
-        @keyframes scp-fade-in { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .scp-results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
-        .scp-result-item { background: var(--scp-bg-glass-result); padding: 1.2rem; border-radius: 14px; border: 1px solid var(--scp-border-glass); text-align: center; transition: transform 0.3s ease; }
-        .scp-result-item:hover { transform: translateY(-2px); background: rgba(255,255,255,0.04); }
-        .scp-result-highlight { grid-column: span 2; background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(212,175,55,0.02)); border: 1px solid var(--scp-border-focus); position: relative; overflow: hidden; padding: 2rem 1.2rem; box-shadow: inset 0 0 20px rgba(212,175,55,0.02); }
-        .scp-result-highlight::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--scp-primary), transparent); opacity: 0.5; }
-        .scp-result-label { font-size: 0.75rem; color: var(--scp-text-light); text-transform: uppercase; margin-bottom: 0.4rem; letter-spacing: 0.5px; font-weight: 500; display: block; }
-        .scp-result-value { font-size: 1.2rem; font-weight: 700; color: #fff; }
-        .scp-result-highlight .scp-result-label { color: var(--scp-primary); font-size: 0.85rem; letter-spacing: 1px; font-weight: 600; }
-        .scp-result-highlight .scp-result-value { font-size: 2.2rem; color: var(--scp-primary); text-shadow: 0 0 15px rgba(212,175,55,0.3); font-weight: 800; line-height: 1.2; }
-        .scp-btn-whatsapp { display: flex; justify-content: center; align-items: center; gap: 12px; background: var(--scp-whatsapp); color: #fff; text-decoration: none; padding: 1rem; border-radius: 12px; font-weight: 600; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
-        .scp-btn-whatsapp:hover { background: var(--scp-whatsapp-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(27, 77, 62, 0.3); }
-        .scp-btn-whatsapp svg { width: 22px; height: 22px; fill: currentColor; }
-        .scp-pulse-animation { animation: scp-pulse 2.5s infinite cubic-bezier(0.66, 0, 0, 1); }
-        @keyframes scp-pulse { 0% { box-shadow: 0 0 0 0 rgba(27, 77, 62, 0.6); } 70% { box-shadow: 0 0 0 12px rgba(27, 77, 62, 0); } 100% { box-shadow: 0 0 0 0 rgba(27, 77, 62, 0); } }
-        .scp-loader { border: 2px solid rgba(0,0,0,0.1); border-radius: 50%; border-top: 2px solid #111; width: 18px; height: 18px; animation: scp-spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; }
-        @keyframes scp-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .scp-glass-card {
+            background: var(--scp-bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--scp-border);
+            border-radius: var(--scp-radius-lg);
+            padding: 2.5rem 2rem;
+            box-shadow: var(--scp-shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scp-glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--scp-glass-shine);
+            pointer-events: none;
+        }
+
+        .scp-header { text-align: center; margin-bottom: 2.5rem; }
+        .scp-title { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #FFF, #D4AF37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.02em; }
+        .scp-subtitle { color: var(--scp-text-muted); font-size: 1rem; }
+
+        .scp-form-grid { display: grid; gap: 1.5rem; margin-bottom: 2rem; }
+        .scp-field label { display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--scp-text-muted); margin-bottom: 0.75rem; }
+        .scp-input { 
+            width: 100%; padding: 1.1rem 1.25rem; 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid var(--scp-border); 
+            border-radius: var(--scp-radius-md); 
+            color: #fff; font-size: 1.1rem; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .scp-input:focus { border-color: var(--scp-primary); outline: none; background: rgba(255,255,255,0.06); box-shadow: 0 0 20px rgba(212, 175, 55, 0.15); }
+
+        .scp-btn-main {
+            width: 100%; padding: 1.2rem; 
+            background: var(--scp-primary); 
+            color: #000; font-weight: 700; font-size: 1.1rem;
+            border: none; border-radius: var(--scp-radius-md); 
+            cursor: pointer; transition: all 0.4s;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .scp-btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4); filter: brightness(1.1); }
+        .scp-btn-main:active { transform: translateY(-1px); }
+
+        /* LOADING OVERLAY */
+        .scp-loading-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15,15,18,0.95); z-index: 10;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s;
+        }
+        .scp-loading-overlay.active { opacity: 1; pointer-events: all; }
+        .scp-spinner { width: 50px; height: 50px; border: 3px solid rgba(212, 175, 55, 0.1); border-top-color: var(--scp-primary); border-radius: 50%; animation: scp-spin 1s linear infinite; margin-bottom: 1rem; }
+        @keyframes scp-spin { to { transform: rotate(360deg); } }
+
+        /* RESULTS AREA */
+        .scp-results { display: none; margin-top: 3rem; animation: scp-slide-up 0.8s cubic-bezier(0.2, 1, 0.3, 1); }
+        @keyframes scp-slide-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .scp-main-impact {
+            text-align: center; padding: 2.5rem; background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2); border-radius: var(--scp-radius-lg);
+            margin-bottom: 2rem; position: relative;
+        }
+        .scp-main-impact-label { font-size: 0.9rem; color: var(--scp-primary); font-weight: 600; margin-bottom: 0.5rem; display: block; }
+        .scp-main-impact-value { font-size: 3.5rem; font-weight: 900; line-height: 1; margin-bottom: 1rem; display: block; text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+        .scp-main-impact-sub { font-size: 0.85rem; color: var(--scp-text-muted); }
+
+        .scp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .scp-stat-card { background: rgba(255,255,255,0.03); border: 1px solid var(--scp-border); padding: 1.5rem; border-radius: var(--scp-radius-md); text-align: center; }
+        .scp-stat-label { font-size: 0.7rem; color: var(--scp-text-muted); text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+        .scp-stat-value { font-size: 1.25rem; font-weight: 700; color: #fff; }
+        .scp-stat-detail { font-size: 0.75rem; color: var(--scp-primary); margin-top: 0.4rem; display: block; }
+
+        /* COMPARISON BLOCK */
+        .scp-comparison { margin-bottom: 2.5rem; }
+        .scp-comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--scp-border); border-radius: var(--scp-radius-md); overflow: hidden; border: 1px solid var(--scp-border); }
+        .scp-comp-col { background: var(--scp-bg-glass); padding: 1.5rem; }
+        .scp-comp-col.active { background: rgba(212, 175, 55, 0.03); }
+        .scp-comp-title { font-size: 0.8rem; font-weight: 700; margin-bottom: 1.2rem; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+        .scp-comp-list { list-style: none; padding: 0; margin: 0; font-size: 0.85rem; }
+        .scp-comp-list li { margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; color: var(--scp-text-muted); }
+        .scp-comp-list li::before { content: '✕'; color: #ff4d4d; font-weight: bold; flex-shrink: 0; }
+        .scp-comp-col.active .scp-comp-list li::before { content: '✓'; color: #2ecc71; }
+        .scp-comp-col.active .scp-comp-list li { color: #fff; }
+
+        /* TIMELINE */
+        .scp-timeline { margin-bottom: 2.5rem; }
+        .scp-timeline-title { font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; }
+        .scp-timeline-track { display: flex; justify-content: space-between; position: relative; padding: 0 10px; }
+        .scp-timeline-track::before { content: ''; position: absolute; top: 12px; left: 10px; right: 10px; height: 2px; background: var(--scp-border); z-index: 0; }
+        .scp-timeline-step { position: relative; z-index: 1; text-align: center; flex: 1; }
+        .scp-timeline-dot { width: 24px; height: 24px; background: #222; border: 2px solid var(--scp-border); border-radius: 50%; margin: 0 auto 10px; transition: all 0.5s; }
+        .scp-timeline-step.active .scp-timeline-dot { background: var(--scp-primary); border-color: var(--scp-primary); box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
+        .scp-timeline-year { font-size: 0.7rem; color: var(--scp-text-muted); font-weight: 600; }
+        .scp-timeline-val { font-size: 0.8rem; font-weight: 700; margin-top: 5px; opacity: 0; transition: all 0.5s; transform: translateY(5px); }
+        .scp-timeline-step.active .scp-timeline-val { opacity: 1; transform: translateY(0); }
+
+        /* FINANCING BOX */
+        .scp-finance-box { background: #111; padding: 1.5rem; border-radius: var(--scp-radius-md); border-left: 4px solid var(--scp-primary); margin-bottom: 2.5rem; }
+        .scp-finance-header { font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; display: flex; justify-content: space-between; }
+        .scp-finance-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; font-size: 0.85rem; }
+        .scp-finance-val { font-weight: 700; }
+        .scp-finance-val.green { color: #2ecc71; }
+
+        /* CTA */
+        .scp-cta-whatsapp {
+            background: #1b4d3e; color: #fff; text-decoration: none;
+            padding: 1.2rem; border-radius: var(--scp-radius-md);
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            transition: all 0.3s; font-weight: 700; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .scp-cta-whatsapp:hover { background: #236350; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .scp-cta-main-text { font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+        .scp-cta-sub-text { font-size: 0.75rem; opacity: 0.8; font-weight: 400; }
+        .scp-cta-whatsapp svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .scp-error { color: #ff4d4d; font-size: 0.8rem; margin-top: 1rem; text-align: center; display: none; }
+
+        @media (max-width: 480px) {
+            .scp-glass-card { padding: 2rem 1.25rem; }
+            .scp-main-impact-value { font-size: 2.5rem; }
+            .scp-grid { grid-template-columns: 1fr; }
+            .scp-comp-grid { grid-template-columns: 1fr; }
+            .scp-comp-col { border-bottom: 1px solid var(--scp-border); }
+        }
     `;
     document.head.appendChild(style);
 
     // 4. HTML INJECTION
     const target = document.getElementById('solar-pro-widget');
-    if (!target) return;
-    
-    if (target.dataset.loaded) return;
+    if (!target || target.dataset.loaded) return;
     target.dataset.loaded = 'true';
 
     target.innerHTML = `
-        <div class="scp-calculator-container">
-            <div class="scp-card">
-                <h2 class="scp-title">Simulador Premium</h2>
-                <p class="scp-subtitle">Descubra o potencial de economia do seu imóvel.</p>
-                <div class="scp-form-group">
-                    <label>Seu Nome Completo</label>
-                    <input type="text" id="userName" placeholder="Ex: João da Silva" autocomplete="name">
+        <div class="scp-widget">
+            <div class="scp-glass-card">
+                <div class="scp-loading-overlay">
+                    <div class="scp-spinner"></div>
+                    <p style="font-weight: 600; color: #D4AF37;">Analisando potencial energético...</p>
+                    <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">Calculando irradiação e ROI</p>
                 </div>
-                <div class="scp-form-group">
-                    <label>Valor médio da conta de luz (R$)</label>
-                    <input type="number" id="billValue" placeholder="Ex: 500" inputmode="numeric">
+
+                <div class="scp-header">
+                    <h2 class="scp-title">Simulador Premium</h2>
+                    <p class="scp-subtitle">Consiga previsibilidade e liberdade energética.</p>
                 </div>
-                <div id="scp-error-msg" class="scp-error-message" style="display: none;"></div>
-                <button id="calculateBtn" class="scp-btn-primary">
-                    <span>Calcular Economia</span>
-                    <div class="scp-loader" style="display: none;"></div>
-                </button>
-                <div id="scp-results" class="scp-results-section" style="display: none;">
-                    <div class="scp-results-grid">
-                        <div class="scp-result-item">
-                            <span class="scp-result-label">Economia Mensal</span>
-                            <span id="monthlySavings" class="scp-result-value">R$ 0,00</span>
+
+                <div id="scp-form">
+                    <div class="scp-form-grid">
+                        <div class="scp-field">
+                            <label>Seu Nome Completo</label>
+                            <input type="text" id="scp-name" class="scp-input" placeholder="Ex: Marcelo Silva">
                         </div>
-                        <div class="scp-result-item">
-                            <span class="scp-result-label">Economia Anual</span>
-                            <span id="yearlySavings" class="scp-result-value">R$ 0,00</span>
-                        </div>
-                        <div class="scp-result-item">
-                            <span class="scp-result-label">Sistema Estimado</span>
-                            <span id="systemSize" class="scp-result-value">0,00 kWp</span>
-                        </div>
-                        <div class="scp-result-item">
-                            <span class="scp-result-label">Investimento Base</span>
-                            <span id="estInvestment" class="scp-result-value">R$ 0,00</span>
-                        </div>
-                        <div class="scp-result-item scp-result-highlight">
-                            <span class="scp-result-label">Retorno do Investimento (Payback)</span>
-                            <span id="payback" class="scp-result-value">0 anos</span>
+                        <div class="scp-field">
+                            <label>Valor médio da conta (R$)</label>
+                            <input type="number" id="scp-bill" class="scp-input" placeholder="Ex: 500" inputmode="numeric">
                         </div>
                     </div>
-                    <a href="#" class="scp-btn-whatsapp" target="_blank" style="display: none;">
-                        <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/></svg>
-                        Falar com Especialista Mavinic
+                    <button id="scp-calc-btn" class="scp-btn-main">
+                        Ver Simulação Completa
+                    </button>
+                    <div id="scp-form-error" class="scp-error"></div>
+                </div>
+
+                <div id="scp-results" class="scp-results">
+                    <div class="scp-main-impact">
+                        <span class="scp-main-impact-label">Economia acumulada em 25 anos:</span>
+                        <span id="scp-val-25y" class="scp-main-impact-value">R$ 0,00</span>
+                        <p class="scp-main-impact-sub">Com base na vida útil do sistema e reajustes energéticos.</p>
+                    </div>
+
+                    <div class="scp-grid">
+                        <div class="scp-stat-card">
+                            <span class="scp-stat-label">Economia Mensal</span>
+                            <span id="scp-val-monthly" class="scp-stat-value">R$ 0,00</span>
+                        </div>
+                        <div class="scp-stat-card">
+                            <span class="scp-stat-label">Retorno (Payback)</span>
+                            <span id="scp-val-payback" class="scp-stat-value">0 anos</span>
+                        </div>
+                        <div class="scp-stat-card">
+                            <span class="scp-stat-label">Tamanho do Sistema</span>
+                            <span id="scp-val-kwp" class="scp-stat-value">0,00 kWp</span>
+                            <span id="scp-val-panels" class="scp-stat-detail">≈ 0 painéis</span>
+                        </div>
+                        <div class="scp-stat-card">
+                            <span class="scp-stat-label">Área Necessária</span>
+                            <span id="scp-val-area" class="scp-stat-value">0 m²</span>
+                            <span class="scp-stat-detail">Estimativa aproximada</span>
+                        </div>
+                    </div>
+
+                    <div class="scp-finance-box">
+                        <div class="scp-finance-header">
+                            <span>OPÇÃO DE FINANCIAMENTO</span>
+                            <span style="color: var(--scp-primary);">SEM ENTRADA</span>
+                        </div>
+                        <div class="scp-finance-row">
+                            <span>Sua conta atual:</span>
+                            <span id="scp-fin-current" class="scp-finance-val">R$ 0,00</span>
+                        </div>
+                        <div class="scp-finance-row">
+                            <span>Parcela estimada (60x):</span>
+                            <span id="scp-fin-parcel" class="scp-finance-val green">R$ 0,00</span>
+                        </div>
+                        <div style="font-size: 0.7rem; color: #666; text-align: center; margin-top: 10px;">
+                            Troque sua conta por um patrimônio. Parcela menor que o gasto atual.
+                        </div>
+                    </div>
+
+                    <div class="scp-timeline">
+                        <p class="scp-timeline-title">Crescimento do seu Patrimônio</p>
+                        <div class="scp-timeline-track">
+                            <div class="scp-timeline-step" id="step-1">
+                                <div class="scp-timeline-dot"></div>
+                                <span class="scp-timeline-year">1 Ano</span>
+                                <div class="scp-timeline-val" id="tl-1">R$ 0</div>
+                            </div>
+                            <div class="scp-timeline-step" id="step-5">
+                                <div class="scp-timeline-dot"></div>
+                                <span class="scp-timeline-year">5 Anos</span>
+                                <div class="scp-timeline-val" id="tl-5">R$ 0</div>
+                            </div>
+                            <div class="scp-timeline-step" id="step-10">
+                                <div class="scp-timeline-dot"></div>
+                                <span class="scp-timeline-year">10 Anos</span>
+                                <div class="scp-timeline-val" id="tl-10">R$ 0</div>
+                            </div>
+                            <div class="scp-timeline-step" id="step-25">
+                                <div class="scp-timeline-dot"></div>
+                                <span class="scp-timeline-year">25 Anos</span>
+                                <div class="scp-timeline-val" id="tl-25">R$ 0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scp-comparison">
+                        <div class="scp-comp-grid">
+                            <div class="scp-comp-col">
+                                <div class="scp-comp-title">Sem Energia Solar</div>
+                                <ul class="scp-comp-list">
+                                    <li>Conta aumenta todo ano</li>
+                                    <li>Dependência total</li>
+                                    <li>Gasto contínuo e perdido</li>
+                                    <li>Sem retorno financeiro</li>
+                                </ul>
+                            </div>
+                            <div class="scp-comp-col active">
+                                <div class="scp-comp-title" style="color: var(--scp-primary);">Com Energia Solar</div>
+                                <ul class="scp-comp-list">
+                                    <li>Economia recorrente</li>
+                                    <li>Patrimônio energético</li>
+                                    <li>Previsibilidade mensal</li>
+                                    <li>Valorização do imóvel</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a id="scp-whatsapp-btn" href="#" target="_blank" class="scp-cta-whatsapp">
+                        <div class="scp-cta-main-text">
+                            <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/></svg>
+                            SOLICITAR PROJETO PERSONALIZADO
+                        </div>
+                        <span class="scp-cta-sub-text">Resposta imediata via WhatsApp</span>
                     </a>
                 </div>
             </div>
@@ -161,210 +353,195 @@
 
     // 5. ELEMENTS
     const elements = {
-        userName: document.getElementById('userName'),
-        billValue: document.getElementById('billValue'),
-        calculateBtn: document.getElementById('calculateBtn'),
-        resultsSection: document.getElementById('scp-results'),
-        errorMsg: document.getElementById('scp-error-msg'),
-        whatsappBtn: document.querySelector('.scp-btn-whatsapp'),
-        loader: document.querySelector('.scp-loader'),
-        btnText: document.querySelector('#calculateBtn span'),
-        monthlySavings: document.getElementById('monthlySavings'),
-        yearlySavings: document.getElementById('yearlySavings'),
-        systemSize: document.getElementById('systemSize'),
-        payback: document.getElementById('payback'),
-        estInvestment: document.getElementById('estInvestment')
+        name: document.getElementById('scp-name'),
+        bill: document.getElementById('scp-bill'),
+        btn: document.getElementById('scp-calc-btn'),
+        results: document.getElementById('scp-results'),
+        overlay: document.querySelector('.scp-loading-overlay'),
+        error: document.getElementById('scp-form-error'),
+        val25y: document.getElementById('scp-val-25y'),
+        valMonthly: document.getElementById('scp-val-monthly'),
+        valPayback: document.getElementById('scp-val-payback'),
+        valKwp: document.getElementById('scp-val-kwp'),
+        valPanels: document.getElementById('scp-val-panels'),
+        valArea: document.getElementById('scp-val-area'),
+        finCurrent: document.getElementById('scp-fin-current'),
+        finParcel: document.getElementById('scp-fin-parcel'),
+        whatsapp: document.getElementById('scp-whatsapp-btn'),
+        tl1: document.getElementById('tl-1'),
+        tl5: document.getElementById('tl-5'),
+        tl10: document.getElementById('tl-10'),
+        tl25: document.getElementById('tl-25')
     };
 
-    if (!elements.calculateBtn || !elements.userName || !elements.billValue) return;
-
-    let leadSent = false;
-    let isCalculating = false;
-
-    // 6. LOGIC FUNCTIONS
+    // 6. CALCULATIONS
     const Logic = {
-        calculate(conta) {
-            const consumo = conta / config.tarifa;
-            const kwp = consumo / config.producao_kwp;
-            const ecoMes = conta * config.taxa_economia;
-            const ecoAno = ecoMes * 12;
-            const inv = kwp * config.custo_kwp;
-            let pb = (ecoAno > 0) ? inv / ecoAno : 0;
-            if (pb > 25) pb = 25;
-
-            return { monthlySavings: ecoMes, yearlySavings: ecoAno, systemSize: kwp, estInvestment: inv, payback: pb };
-        },
-
-        validate(nome, conta) {
-            elements.userName.classList.remove('scp-input-error');
-            elements.billValue.classList.remove('scp-input-error');
-            let error = "";
-
-            const nameRegex = /^[a-zA-ZÀ-ÿ\s]{2,}(\s[a-zA-ZÀ-ÿ\s]{2,})+$/;
-            if (!nome || !nameRegex.test(nome.trim())) {
-                error = "Por favor, informe seu nome completo válido.";
-                elements.userName.classList.add('scp-input-error');
-            } else if (isNaN(conta) || conta <= 0) {
-                error = "Informe um valor de conta válido.";
-                elements.billValue.classList.add('scp-input-error');
-            } else if (conta > 100000) {
-                error = "Valor acima do limite para simulação online.";
-                elements.billValue.classList.add('scp-input-error');
+        calculate(bill) {
+            const consumption = bill / config.tarifa;
+            const kwp = consumption / config.producao_kwp;
+            const savingsMonthly = bill * config.taxa_economia;
+            const investment = kwp * config.custo_kwp;
+            
+            // Economia acumulada com inflação energética
+            let total25y = 0;
+            let yearlyEcon = savingsMonthly * 12;
+            const savingsTimeline = { 1: 0, 5: 0, 10: 0, 25: 0 };
+            
+            for (let year = 1; year <= 25; year++) {
+                total25y += yearlyEcon;
+                if (year === 1) savingsTimeline[1] = total25y;
+                if (year === 5) savingsTimeline[5] = total25y;
+                if (year === 10) savingsTimeline[10] = total25y;
+                if (year === 25) savingsTimeline[25] = total25y;
+                yearlyEcon *= (1 + config.inflacao_energetica);
             }
 
-            if (error) {
-                elements.errorMsg.textContent = error;
-                elements.errorMsg.style.display = 'block';
+            const payback = investment / (savingsMonthly * 12);
+            
+            // Financiamento (PMT)
+            const n = config.prazo_financiamento;
+            const i = config.taxa_financiamento;
+            const parcel = investment * ( (i * Math.pow(1+i, n)) / (Math.pow(1+i, n) - 1) );
+
+            const panels = Math.ceil((kwp * 1000) / config.painel_watts);
+            const area = panels * config.painel_area;
+
+            return {
+                savingsMonthly,
+                total25y,
+                payback: Math.min(payback, 25),
+                kwp,
+                investment,
+                parcel,
+                panels,
+                area,
+                timeline: savingsTimeline
+            };
+        },
+
+        validate(name, bill) {
+            elements.name.style.borderColor = '';
+            elements.bill.style.borderColor = '';
+            elements.error.style.display = 'none';
+
+            if (!name || name.trim().split(' ').length < 2) {
+                elements.name.style.borderColor = '#ff4d4d';
+                elements.error.textContent = "Informe seu nome completo.";
+                elements.error.style.display = 'block';
                 return false;
             }
-            elements.errorMsg.style.display = 'none';
+            if (!bill || bill < 150) {
+                elements.bill.style.borderColor = '#ff4d4d';
+                elements.error.textContent = "O valor mínimo para simulação é R$ 150,00.";
+                elements.error.style.display = 'block';
+                return false;
+            }
             return true;
-        },
-
-        async sendLead(data, results, retryCount = 2) {
-            if (leadSent || !config.webhook) return;
-            
-            const payload = {
-                nome: data.nome,
-                valor_conta: Number(data.valor_conta),
-                economia_mensal: Number(results.monthlySavings),
-                sistema_kwp: Number(results.systemSize),
-                investimento: Number(results.estInvestment),
-                payback: Number(results.payback),
-                timestamp: new Date().toISOString(),
-                origem: window.location.href,
-                utms: Utils.getUTMs(),
-                device: Utils.getDeviceInfo()
-            };
-
-            const attempt = async (remaining) => {
-                try {
-                    // 1. Envio para o Webhook Principal (Make.com)
-                    const resp = await fetch(config.webhook, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    // 2. Envio para a API Interna (Vercel) como redundância (se no mesmo domínio)
-                    if (window.location.hostname !== 'localhost' || DEBUG) {
-                        fetch('/api/leads', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                name: data.nome,
-                                whatsapp: data.whatsapp || '',
-                                billAmount: data.valor_conta
-                            })
-                        }).catch(err => console.error("Erro no backup interno:", err));
-                    }
-
-                    leadSent = true;
-                    if (DEBUG) console.log("Lead enviado com sucesso.");
-                } catch (e) {
-                    console.error("Erro no envio do lead:", e);
-                    if (remaining > 0) {
-                        setTimeout(() => attempt(remaining - 1), 2000);
-                    } else {
-                        // Fallback visível se falhar após retentativas
-                        if (elements.errorMsg) {
-                            elements.errorMsg.innerHTML = `
-                                <span>Notei uma instabilidade na rede.</span><br>
-                                <small>Mas não se preocupe, seus cálculos estão prontos abaixo!</small>
-                            `;
-                            elements.errorMsg.style.display = 'block';
-                            elements.errorMsg.style.borderColor = 'orange';
-                            elements.errorMsg.style.color = 'orange';
-                        }
-                    }
-                }
-            };
-            attempt(retryCount);
         }
     };
 
-    // 7. ANIMATION
-    function animate(obj, start, end, duration, type) {
-        if (!obj) return;
-        let startT = null;
-        const step = (t) => {
-            if (!startT) startT = t;
-            const progress = Math.min((t - startT) / duration, 1);
-            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-            const val = easeOutQuart * (end - start) + start;
+    // 7. UI UPDATES
+    function animateValue(el, start, end, duration, format = 'BRL') {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const value = progress * (end - start) + start;
             
-            if (type === 'BRL') {
-                obj.innerHTML = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            } else if (type === 'KWP') {
-                obj.innerHTML = val.toFixed(2).replace('.', ',') + ' kWp';
-            } else if (type === 'YEARS') {
-                if (val >= 24.9) {
-                    obj.innerHTML = '25+ anos';
-                } else {
-                    const displayVal = val.toFixed(1).replace('.', ',');
-                    obj.innerHTML = displayVal + (val <= 1.1 ? ' ano' : ' anos');
-                }
+            if (format === 'BRL') {
+                el.textContent = Utils.formatBRL(value);
+            } else if (format === 'KWP') {
+                el.textContent = value.toFixed(2).replace('.', ',') + ' kWp';
+            } else if (format === 'YEARS') {
+                el.textContent = value.toFixed(1).replace('.', ',') + ' anos';
+            } else if (format === 'INT') {
+                el.textContent = Math.floor(value);
             }
             
-            if (progress < 1) requestAnimationFrame(step);
+            if (progress < 1) window.requestAnimationFrame(step);
         };
-        requestAnimationFrame(step);
+        window.requestAnimationFrame(step);
     }
 
-    // 8. EVENT LISTENERS
-    elements.calculateBtn.addEventListener('click', () => {
-        if (isCalculating) return;
-        const nome = elements.userName.value.trim();
-        const conta = parseFloat(elements.billValue.value);
+    async function sendLead(name, bill, results) {
+        const payload = {
+            nome: name,
+            valor_conta: bill,
+            resultados: {
+                kwp: results.kwp.toFixed(2),
+                economia_mensal: results.savingsMonthly.toFixed(2),
+                investimento: results.investment.toFixed(2),
+                payback: results.payback.toFixed(1),
+                economia_25anos: results.total25y.toFixed(2)
+            },
+            utms: Utils.getUTMs(),
+            device: Utils.getDeviceInfo(),
+            timestamp: new Date().toISOString()
+        };
 
-        if (!Logic.validate(nome, conta)) return;
+        try {
+            await fetch(config.webhook, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+        } catch (e) {
+            console.error("Lead send failed", e);
+        }
+    }
 
-        isCalculating = true;
-        elements.calculateBtn.disabled = true;
-        elements.loader.style.display = 'block';
-        elements.btnText.style.opacity = '0.5';
+    // 8. EVENTS
+    elements.btn.addEventListener('click', () => {
+        const name = elements.name.value;
+        const bill = parseFloat(elements.bill.value);
 
-        Utils.trackEvent('simulacao_iniciada', { nome });
+        if (!Logic.validate(name, bill)) return;
+
+        // Show Loading
+        elements.overlay.classList.add('active');
+        Utils.trackEvent('calc_click', { name });
 
         setTimeout(() => {
-            const results = Logic.calculate(conta);
-            elements.resultsSection.style.display = 'block';
+            const res = Logic.calculate(bill);
             
-            animate(elements.monthlySavings, 0, results.monthlySavings, 800, 'BRL');
-            animate(elements.yearlySavings, 0, results.yearlySavings, 800, 'BRL');
-            animate(elements.systemSize, 0, results.systemSize, 800, 'KWP');
-            animate(elements.estInvestment, 0, results.estInvestment, 800, 'BRL');
-            animate(elements.payback, 0, results.payback, 800, 'YEARS');
+            elements.overlay.classList.remove('active');
+            elements.results.style.display = 'block';
 
-            if (config.whatsapp && elements.whatsappBtn) {
-                const msg = `Olá! Sou ${nome} e vi que posso economizar ${results.monthlySavings.toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}/mês com energia solar. Pode me ajudar?`;
-                elements.whatsappBtn.href = `https://wa.me/${config.whatsapp}?text=${encodeURIComponent(msg)}`;
-                elements.whatsappBtn.style.display = 'flex';
-                elements.whatsappBtn.classList.add('scp-pulse-animation');
-            }
-
-            Utils.trackEvent('simulacao_concluida', { economia: results.monthlySavings });
-            Logic.sendLead({ nome, valor_conta: conta }, results);
-
-            isCalculating = false;
-            elements.calculateBtn.disabled = false;
-            elements.loader.style.display = 'none';
-            elements.btnText.style.opacity = '1';
+            // Main Animation
+            animateValue(elements.val25y, 0, res.total25y, 1500);
+            animateValue(elements.valMonthly, 0, res.savingsMonthly, 1000);
+            animateValue(elements.valPayback, 0, res.payback, 1000, 'YEARS');
+            animateValue(elements.valKwp, 0, res.kwp, 1000, 'KWP');
+            elements.valPanels.textContent = `≈ ${res.panels} módulos solares`;
+            elements.valArea.textContent = `${Math.ceil(res.area)} m²`;
             
-            setTimeout(() => elements.resultsSection.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-        }, 800);
+            elements.finCurrent.textContent = Utils.formatBRL(bill);
+            animateValue(elements.finParcel, 0, res.parcel, 1200);
+
+            // Timeline Animation
+            [1, 5, 10, 25].forEach((y, i) => {
+                setTimeout(() => {
+                    const step = document.getElementById(`step-${y}`);
+                    const val = document.getElementById(`tl-${y}`);
+                    step.classList.add('active');
+                    val.textContent = Utils.formatBRL(res.timeline[y]).split(',')[0];
+                }, 1000 + (i * 300));
+            });
+
+            // WhatsApp Link
+            const waMsg = `Olá! Meu nome é ${name.split(' ')[0]}. Vi na calculadora que posso economizar ${Utils.formatBRL(res.savingsMonthly)}/mês e acumular ${Utils.formatBRL(res.total25y)} em 25 anos. Gostaria de uma simulação detalhada.`;
+            elements.whatsapp.href = `https://wa.me/${config.whatsapp}?text=${encodeURIComponent(waMsg)}`;
+
+            // Send Lead
+            sendLead(name, bill, res);
+
+            // Smooth Scroll
+            setTimeout(() => {
+                elements.results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+
+        }, 1500);
     });
 
-    const reset = () => { leadSent = false; elements.errorMsg.style.display = 'none'; };
-    elements.userName.addEventListener('input', reset);
-    elements.billValue.addEventListener('input', reset);
-
-    if (elements.whatsappBtn) {
-        elements.whatsappBtn.addEventListener('click', () => {
-            Utils.trackEvent('click_whatsapp', { nome: elements.userName.value });
-        });
-    }
-
 })();
-
