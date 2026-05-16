@@ -65,6 +65,13 @@
             --scp-radius-md: 16px;
             --scp-shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.4);
             --scp-glass-shine: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            --scp-glow-impact: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+
+        @keyframes scp-shine-sweep {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
         }
 
         .scp-widget {
@@ -139,13 +146,19 @@
         @keyframes scp-slide-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         .scp-main-impact {
-            text-align: center; padding: 2.5rem; background: rgba(212, 175, 55, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.2); border-radius: var(--scp-radius-lg);
-            margin-bottom: 2rem; position: relative;
+            text-align: center; padding: 3rem 2rem; background: rgba(212, 175, 55, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.15); border-radius: var(--scp-radius-lg);
+            margin-bottom: 2.5rem; position: relative; overflow: hidden;
+            box-shadow: var(--scp-glow-impact);
         }
-        .scp-main-impact-label { font-size: 0.9rem; color: var(--scp-primary); font-weight: 600; margin-bottom: 0.5rem; display: block; }
-        .scp-main-impact-value { font-size: 3.5rem; font-weight: 900; line-height: 1; margin-bottom: 1rem; display: block; text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
-        .scp-main-impact-sub { font-size: 0.85rem; color: var(--scp-text-muted); }
+        .scp-main-impact::after {
+            content: ''; position: absolute; top: 0; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: skewX(-20deg); animation: scp-shine-sweep 4s infinite;
+        }
+        .scp-main-impact-label { font-size: 0.85rem; color: var(--scp-primary); font-weight: 700; margin-bottom: 0.75rem; display: block; text-transform: uppercase; letter-spacing: 0.1em; }
+        .scp-main-impact-value { font-size: 3.8rem; font-weight: 900; line-height: 1; margin-bottom: 1.2rem; display: block; color: #fff; text-shadow: 0 0 25px rgba(212, 175, 55, 0.4); }
+        .scp-main-impact-sub { font-size: 0.85rem; color: var(--scp-text-muted); max-width: 400px; margin: 0 auto; }
 
         .scp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
         .scp-stat-card { background: rgba(255,255,255,0.03); border: 1px solid var(--scp-border); padding: 1.5rem; border-radius: var(--scp-radius-md); text-align: center; }
@@ -218,13 +231,13 @@
             <div class="scp-glass-card">
                 <div class="scp-loading-overlay">
                     <div class="scp-spinner"></div>
-                    <p style="font-weight: 600; color: #D4AF37;">Analisando potencial energético...</p>
-                    <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">Calculando irradiação e ROI</p>
+                    <p style="font-weight: 700; color: #D4AF37; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem;">Projetando seu patrimônio...</p>
+                    <p style="font-size: 0.75rem; color: #666; margin-top: 5px;">Analisando dados de irradiação solar</p>
                 </div>
 
                 <div class="scp-header">
-                    <h2 class="scp-title">Simulador Premium</h2>
-                    <p class="scp-subtitle">Consiga previsibilidade e liberdade energética.</p>
+                    <h2 class="scp-title">Simulador de Patrimônio</h2>
+                    <p class="scp-subtitle">Transforme sua conta de luz em liberdade financeira.</p>
                 </div>
 
                 <div id="scp-form">
@@ -246,9 +259,9 @@
 
                 <div id="scp-results" class="scp-results">
                     <div class="scp-main-impact">
-                        <span class="scp-main-impact-label">Economia acumulada em 25 anos:</span>
+                        <span class="scp-main-impact-label">Patrimônio acumulado em 25 anos:</span>
                         <span id="scp-val-25y" class="scp-main-impact-value">R$ 0,00</span>
-                        <p class="scp-main-impact-sub">Com base na vida útil do sistema e reajustes energéticos.</p>
+                        <p class="scp-main-impact-sub">Cálculo baseado na vida útil do sistema, eliminando a inflação energética do período.</p>
                     </div>
 
                     <div class="scp-grid">
