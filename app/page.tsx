@@ -1,3 +1,4 @@
+import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import PainSection from "./components/PainSection";
 import Benefits from "./components/Benefits";
@@ -9,6 +10,7 @@ import Footer from "./components/Footer";
 export default function Home(): React.JSX.Element {
   return (
     <main className="min-h-screen bg-[#0F0F12]">
+      <Navbar />
       <Hero />
       <PainSection />
       <Benefits />

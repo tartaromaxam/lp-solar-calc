@@ -17,8 +17,35 @@ const geistMono = Geist_Mono({
 const GTM_ID = "GTM-WDGT2XPV";
 
 export const metadata: Metadata = {
-  title: "Solar Pro Mavinic | Simulador de Economia Solar Inteligente",
-  description: "Descubra quanto você pode economizar com energia solar. Simulação gratuita e instantânea para sua residência ou empresa.",
+  title: "Mavinic Solar | Simulador de Economia Solar Inteligente",
+  description: "Descubra quanto você pode economizar com energia solar. Simulação gratuita e instantânea para sua residência ou empresa pela Mavinic Solar.",
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/assets/branding/favicon.svg",
+    apple: "/assets/branding/favicon.svg",
+  },
+  openGraph: {
+    title: "Mavinic Solar | Simulador de Economia Solar Inteligente",
+    description: "Transforme o sol em economia real com a inteligência da Mavinic Solar. Reduza até 95% da sua conta de luz.",
+    url: "https://solar.mavinic.com.br",
+    siteName: "Mavinic Solar",
+    images: [
+      {
+        url: "/assets/branding/logo-dark.svg",
+        width: 1200,
+        height: 630,
+        alt: "Mavinic Solar",
+      },
+    ],
+    locale: "pt_BR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mavinic Solar | Simulador de Economia Solar",
+    description: "Transforme o sol em economia real com a inteligência da Mavinic Solar.",
+    images: ["/assets/branding/logo-dark.svg"],
+  },
 };
 
 export default function RootLayout({

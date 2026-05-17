@@ -43,7 +43,7 @@ export default function Hero(): React.JSX.Element {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-white leading-[1.1] tracking-tight mb-8 max-w-[950px]"
           >
-            Sua conta de luz <span className="text-solar italic font-semibold text-white">reduzida em até 95%</span> com a inteligência da Mavinic
+            Sua conta de luz <span className="text-solar italic font-semibold text-white">reduzida em até 95%</span> com a inteligência da Mavinic Solar
           </motion.h1>
 
           {/* Subheadline */}
