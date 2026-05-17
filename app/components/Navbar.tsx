@@ -39,12 +39,12 @@ export default function Navbar() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="relative z-50 flex items-center gap-3 group">
-              <div className="relative w-48 h-12 md:w-60 md:h-14 transition-transform duration-300 group-hover:scale-105">
+              <div className="relative w-56 h-16 md:w-72 md:h-20 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/assets/branding/logo-light.svg"
                   alt="Mavinic Solar"
                   fill
-                  className="object-contain object-left scale-[2.5] origin-left"
+                  className="object-contain object-left scale-[4] origin-left"
                   priority
                 />
               </div>

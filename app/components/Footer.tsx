@@ -6,12 +6,12 @@ export default function Footer(): React.JSX.Element {
       <div className="container mx-auto max-w-[1100px] px-8 text-center">
         <div className="flex flex-col items-center justify-center gap-6 mb-10">
           <div className="flex items-center gap-3 group">
-            <div className="relative w-56 h-16 md:w-72 md:h-20 transition-transform duration-300 group-hover:scale-105">
+            <div className="relative w-64 h-20 md:w-80 md:h-24 transition-transform duration-300 group-hover:scale-105">
               <Image
                 src="/assets/branding/logo-light.svg"
                 alt="Mavinic Solar"
                 fill
-                className="object-contain object-center scale-[2.5]"
+                className="object-contain object-center scale-[3.5]"
               />
             </div>
           </div>
