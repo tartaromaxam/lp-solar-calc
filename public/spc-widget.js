@@ -1,6 +1,7 @@
 (function() {
-    // 1. CONFIG LOAD (Proteção Global)
-    window.spc_config = window.spc_config || {};
+    window.renderSolarWidget = function() {
+        // 1. CONFIG LOAD (Proteção Global)
+        window.spc_config = window.spc_config || {};
     
     const config = {
         tarifa: parseFloat(window.spc_config?.tarifa) || 0.82,
@@ -50,9 +51,11 @@
     };
 
     // 3. CSS INJECTION (Premium SaaS/Tesla Style)
-    const style = document.createElement('style');
-    style.textContent = `
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    if (!document.getElementById('scp-widget-styles')) {
+        const style = document.createElement('style');
+        style.id = 'scp-widget-styles';
+        style.textContent = `
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
         :root {
             --scp-primary: ${config.cor_primaria};
@@ -219,7 +222,8 @@
             .scp-comp-col { border-bottom: 1px solid var(--scp-border); }
         }
     `;
-    document.head.appendChild(style);
+        document.head.appendChild(style);
+    }
 
     // 4. HTML INJECTION
     const target = document.getElementById('solar-pro-widget');
@@ -568,4 +572,12 @@
         }, 1500);
     });
 
+    }; // End of window.renderSolarWidget
+
+    // Auto-init for standard HTML environments or initial load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', window.renderSolarWidget);
+    } else {
+        window.renderSolarWidget();
+    }
 })();
