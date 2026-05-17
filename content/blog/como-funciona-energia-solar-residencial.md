@@ -1,0 +1,39 @@
+---
+title: "Como funciona a energia solar residencial passo a passo"
+description: "Entenda exatamente como a luz do sol vira eletricidade na sua tomada e por que o sistema fotovoltaico é a tecnologia mais inteligente para o seu lar."
+category: "Tecnologia Solar"
+image: "https://images.unsplash.com/photo-1611365892117-00ac5ef43c90?auto=format&fit=crop&q=80&w=1200"
+date: "2026-05-14"
+---
+
+Muitas pessoas confundem energia solar fotovoltaica com aquecedor solar de água. Enquanto o aquecedor apenas esquenta a água do chuveiro, a tecnologia **fotovoltaica** gera eletricidade real para alimentar a sua geladeira, suas TVs, seus computadores e, claro, o vilão do verão: o ar-condicionado.
+
+Mas como essa mágica acontece? Vamos te explicar em 4 passos simples.
+
+## 1. Captação da Luz Solar
+Tudo começa nos **Painéis Solares** instalados no seu telhado. Eles são feitos de células de silício que reagem à luz do sol. Quando as partículas de luz (fótons) atingem o painel, elas excitam os elétrons do silício, gerando uma corrente elétrica contínua.
+
+## 2. A Mágica do Inversor
+A energia que sai dos painéis é "corrente contínua" (CC), a mesma das pilhas e baterias. Porém, a sua casa funciona em "corrente alternada" (CA). 
+
+É aqui que entra o cérebro do sistema: o **Inversor Solar**. Ele recebe essa energia dos painéis e a transforma no formato exato que as suas tomadas precisam, de forma totalmente automática.
+
+## 3. Consumo em Tempo Real
+A energia convertida vai direto para o quadro de disjuntores da sua casa. Tudo o que estiver ligado naquele momento (geladeira, lâmpadas) vai usar a energia gerada pelo sol imediatamente. 
+
+> *Detalhe importante:* Como essa energia é gerada por você, a distribuidora de energia não tem como medir nem cobrar por ela. Essa energia é 100% gratuita.
+
+## 4. O Sistema de Créditos (Relógio Bidirecional)
+E quando você gera mais do que consome? (Isso acontece quase todo dia de sol forte). 
+
+O excesso passa por um relógio especial que nós instalamos, chamado de medidor bidirecional, e vai para a rede da rua. Esse relógio anota que você "injetou" energia. Essa injeção vira **créditos**. À noite, você pega essa energia de volta da rede. No fim do mês, a distribuidora só te cobra a diferença (o que chamamos de Net Metering).
+
+[CTA]
+
+## FAQ
+
+**A energia acaba se faltar luz na rua?**
+Sim. Por questões de segurança (para não eletrocutar um técnico que esteja consertando a rede da rua), o seu Inversor desliga automaticamente o sistema quando há queda de energia na vizinhança. (A não ser que você invista em um sistema com baterias híbridas).
+
+**Posso ligar o ar-condicionado à vontade?**
+Sim! Se o seu sistema foi dimensionado na Mavinic Solar para cobrir esse aumento de consumo, você terá liberdade para ligar seus ares-condicionados no máximo sem medo da fatura no final do mês.
