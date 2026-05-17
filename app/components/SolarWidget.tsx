@@ -4,7 +4,7 @@ import Script from 'next/script';
 
 export default function SolarWidget() {
   return (
-    <section className="w-full py-12 flex justify-center items-center">
+    <section id="simulador" className="w-full py-12 flex justify-center items-center">
       {/* 1. Container isolado para o widget. 
           Vazio para evitar Erro de Hidratação do React.
           min-h-[700px] evita o Layout Shift (CLS) enquanto carrega */}
