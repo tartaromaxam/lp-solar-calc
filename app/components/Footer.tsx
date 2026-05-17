@@ -11,7 +11,7 @@ export default function Footer(): React.JSX.Element {
                 src="/assets/branding/logo-light.svg"
                 alt="Mavinic Solar"
                 fill
-                className="object-contain object-center"
+                className="object-contain object-center scale-[2.5]"
               />
             </div>
           </div>

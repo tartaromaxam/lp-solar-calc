@@ -44,7 +44,7 @@ export default function Navbar() {
                   src="/assets/branding/logo-light.svg"
                   alt="Mavinic Solar"
                   fill
-                  className="object-contain object-left"
+                  className="object-contain object-left scale-[2.5] origin-left"
                   priority
                 />
               </div>
