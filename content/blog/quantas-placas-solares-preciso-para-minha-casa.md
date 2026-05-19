@@ -2,7 +2,7 @@
 title: "Quantas placas solares preciso para a minha casa?"
 description: "Aprenda a fazer o cálculo rápido e descubra de quantas placas fotovoltaicas a sua residência precisa para zerar a conta de luz."
 category: "Residencial"
-image: "/assets/blog/Residencial.svg"
+image: "/assets/blog/Residencial.webp"
 date: "2026-05-13"
 ---
 
