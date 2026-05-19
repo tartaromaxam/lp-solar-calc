@@ -2,7 +2,7 @@
 title: "Como funciona a energia solar residencial passo a passo"
 description: "Entenda exatamente como a luz do sol vira eletricidade na sua tomada e por que o sistema fotovoltaico é a tecnologia mais inteligente para o seu lar."
 category: "Tecnologia Solar"
-image: "/assets/blog/Residencial.svg"
+image: "https://images.unsplash.com/photo-1611365892117-00ac5ef43c90?auto=format&fit=crop&q=80&w=1200"
 date: "2026-05-14"
 ---
 
