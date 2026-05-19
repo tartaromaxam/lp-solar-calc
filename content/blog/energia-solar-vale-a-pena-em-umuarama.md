@@ -2,7 +2,7 @@
 title: "Energia Solar vale a pena em Umuarama? Descubra a Verdade"
 description: "Mora em Umuarama e está na dúvida se a energia solar é um bom investimento? Analisamos o clima, a incidência solar e as tarifas da Copel para te dar a resposta definitiva."
 category: "Energia Solar"
-image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=1200"
+image: "/assets/blog/energia-solar-umuarama.webp"
 date: "2026-05-17"
 ---
 

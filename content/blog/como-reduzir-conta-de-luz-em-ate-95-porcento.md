@@ -2,7 +2,7 @@
 title: "Como reduzir a conta de luz em até 95% de forma definitiva"
 description: "Cansado de pagar contas de luz altíssimas? Aprenda como a energia fotovoltaica pode blindar seu bolso e reduzir sua fatura em até 95%."
 category: "Economia"
-image: "https://images.unsplash.com/photo-1548611635-b6e7827d7d4a?auto=format&fit=crop&q=80&w=1200"
+image: "/assets/blog/reduzir-conta-inversores.webp"
 date: "2026-05-16"
 ---
 

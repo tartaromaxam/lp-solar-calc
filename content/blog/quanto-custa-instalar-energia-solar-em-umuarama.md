@@ -2,7 +2,7 @@
 title: "Quanto custa instalar energia solar em Umuarama?"
 description: "Descubra o custo médio de um sistema de energia solar em Umuarama, como o financiamento funciona e por que o valor da parcela muitas vezes é menor que a sua conta de luz."
 category: "Sustentabilidade"
-image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=1200"
+image: "/assets/blog/custo-instalacao-residencial.webp"
 date: "2026-05-15"
 ---
 
