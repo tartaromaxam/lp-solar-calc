@@ -25,12 +25,12 @@ function calculateReadingTime(content: string): string {
 
 export function getPostSlugs() {
   if (!fs.existsSync(postsDirectory)) return [];
-  return fs.readdirSync(postsDirectory).filter(file => file.endsWith('.md'));
+  return fs.readdirSync(postsDirectory).filter(file => file.endsWith('.mdx'));
 }
 
 export function getPostBySlug(slug: string): BlogPost | null {
-  const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = path.join(postsDirectory, `${realSlug}.md`);
+  const realSlug = slug.replace(/\.mdx$/, '');
+  const fullPath = path.join(postsDirectory, `${realSlug}.mdx`);
   
   if (!fs.existsSync(fullPath)) return null;
 

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import Script from "next/script";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -87,6 +88,7 @@ export default function RootLayout({
           </noscript>
         )}
         {children}
+        <FloatingWhatsApp />
       </body>
     </html>
   );

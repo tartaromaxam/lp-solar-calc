@@ -32,6 +32,35 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Premium Typography Overrides */
+.prose {
+  @apply max-w-none text-white/80;
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply text-white font-bold tracking-tight mt-12 mb-6;
+}
+.prose p {
+  @apply text-[1.125rem] leading-[1.8] mb-6 font-light;
+}
+.prose strong {
+  @apply font-bold text-white;
+}
+.prose ul, .prose ol {
+  @apply mb-8 pl-6 text-[1.125rem] font-light leading-[1.8];
+}
+.prose li::marker {
+  @apply text-[#F7C843];
+}
+.prose blockquote {
+  @apply border-l-4 border-[#F7C843] bg-white/5 py-4 px-6 rounded-r-2xl text-[1.25rem] italic text-white/90 my-8 shadow-[inset_0_0_20px_rgba(255,255,255,0.02)];
+}
+.prose a {
+  @apply text-[#F7C843] no-underline border-b border-[#F7C843]/30 hover:border-[#F7C843] hover:text-[#D4AF37] transition-all;
+}
+.prose img {
+  @apply rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.3)] my-12 mx-auto border border-white/5;
+}
+
 @keyframes shine {
   from {
     transform: translateX(-100%);

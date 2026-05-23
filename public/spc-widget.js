@@ -2,6 +2,17 @@
     window.renderSolarWidget = function() {
         // 1. CONFIG LOAD (Proteção Global)
         window.spc_config = window.spc_config || {};
+        
+        const scriptTag = document.currentScript;
+        const scriptUrl = scriptTag ? scriptTag.src : '';
+        let apiBaseUrl = '';
+        if (scriptUrl && scriptUrl.startsWith('http')) {
+            try {
+                apiBaseUrl = new URL(scriptUrl).origin;
+            } catch (e) {
+                console.error("Error parsing script URL:", e);
+            }
+        }
     
     const config = {
         tarifa: parseFloat(window.spc_config?.tarifa) || 0.82,
@@ -18,6 +29,20 @@
         painel_watts: 550,
         painel_area: 2.58
     };
+
+    // Helper to extract RGB numbers from hex
+    const hexToRgbString = (hex) => {
+        let cleaned = hex.replace('#', '');
+        if (cleaned.length === 3) {
+            cleaned = cleaned.split('').map(char => char + char).join('');
+        }
+        const r = parseInt(cleaned.substring(0, 2), 16);
+        const g = parseInt(cleaned.substring(2, 4), 16);
+        const b = parseInt(cleaned.substring(4, 6), 16);
+        return `${r}, ${g}, ${b}`;
+    };
+
+    const primaryRgb = hexToRgbString(config.cor_primaria);
 
     const DEBUG = false;
 
@@ -59,7 +84,7 @@
 
         :root {
             --scp-primary: ${config.cor_primaria};
-            --scp-primary-rgb: 212, 175, 55;
+            --scp-primary-rgb: ${primaryRgb};
             --scp-bg-glass: rgba(15, 15, 18, 0.7);
             --scp-border: rgba(255, 255, 255, 0.08);
             --scp-text-main: #FFFFFF;
@@ -68,7 +93,7 @@
             --scp-radius-md: 16px;
             --scp-shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.4);
             --scp-glass-shine: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
-            --scp-glow-impact: 0 0 30px rgba(212, 175, 55, 0.2);
+            --scp-glow-impact: 0 0 30px rgba(${primaryRgb}, 0.2);
         }
 
         @keyframes scp-shine-sweep {
@@ -106,7 +131,7 @@
         }
 
         .scp-header { text-align: center; margin-bottom: 2.5rem; }
-        .scp-title { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #FFF, #D4AF37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.02em; }
+        .scp-title { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #FFF, var(--scp-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.02em; }
         .scp-subtitle { color: var(--scp-text-muted); font-size: 1rem; }
 
         .scp-form-grid { display: grid; gap: 1.5rem; margin-bottom: 2rem; }
@@ -119,7 +144,7 @@
             color: #fff; font-size: 1.1rem; 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .scp-input:focus { border-color: var(--scp-primary); outline: none; background: rgba(255,255,255,0.06); box-shadow: 0 0 20px rgba(212, 175, 55, 0.15); }
+        .scp-input:focus { border-color: var(--scp-primary); outline: none; background: rgba(255,255,255,0.06); box-shadow: 0 0 20px rgba(${primaryRgb}, 0.15); }
 
         .scp-btn-main {
             width: 100%; padding: 1.2rem; 
@@ -141,7 +166,7 @@
             opacity: 0; pointer-events: none; transition: opacity 0.4s;
         }
         .scp-loading-overlay.active { opacity: 1; pointer-events: all; }
-        .scp-spinner { width: 50px; height: 50px; border: 3px solid rgba(212, 175, 55, 0.1); border-top-color: var(--scp-primary); border-radius: 50%; animation: scp-spin 1s linear infinite; margin-bottom: 1rem; }
+        .scp-spinner { width: 50px; height: 50px; border: 3px solid rgba(${primaryRgb}, 0.1); border-top-color: var(--scp-primary); border-radius: 50%; animation: scp-spin 1s linear infinite; margin-bottom: 1rem; }
         @keyframes scp-spin { to { transform: rotate(360deg); } }
 
         /* RESULTS AREA */
@@ -149,8 +174,8 @@
         @keyframes scp-slide-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         .scp-main-impact {
-            text-align: center; padding: 3rem 2rem; background: rgba(212, 175, 55, 0.03);
-            border: 1px solid rgba(212, 175, 55, 0.15); border-radius: var(--scp-radius-lg);
+            text-align: center; padding: 3rem 2rem; background: rgba(${primaryRgb}, 0.03);
+            border: 1px solid rgba(${primaryRgb}, 0.15); border-radius: var(--scp-radius-lg);
             margin-bottom: 2.5rem; position: relative; overflow: hidden;
             box-shadow: var(--scp-glow-impact);
         }
@@ -160,7 +185,7 @@
             transform: skewX(-20deg); animation: scp-shine-sweep 4s infinite;
         }
         .scp-main-impact-label { font-size: 0.85rem; color: var(--scp-primary); font-weight: 700; margin-bottom: 0.75rem; display: block; text-transform: uppercase; letter-spacing: 0.1em; }
-        .scp-main-impact-value { font-size: 3.8rem; font-weight: 900; line-height: 1; margin-bottom: 1.2rem; display: block; color: #fff; text-shadow: 0 0 25px rgba(212, 175, 55, 0.4); }
+        .scp-main-impact-value { font-size: 3.8rem; font-weight: 900; line-height: 1; margin-bottom: 1.2rem; display: block; color: #fff; text-shadow: 0 0 25px rgba(${primaryRgb}, 0.4); }
         .scp-main-impact-sub { font-size: 0.85rem; color: var(--scp-text-muted); max-width: 400px; margin: 0 auto; }
 
         .scp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
@@ -173,7 +198,7 @@
         .scp-comparison { margin-bottom: 2.5rem; }
         .scp-comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--scp-border); border-radius: var(--scp-radius-md); overflow: hidden; border: 1px solid var(--scp-border); }
         .scp-comp-col { background: var(--scp-bg-glass); padding: 1.5rem; }
-        .scp-comp-col.active { background: rgba(212, 175, 55, 0.03); }
+        .scp-comp-col.active { background: rgba(${primaryRgb}, 0.03); }
         .scp-comp-title { font-size: 0.8rem; font-weight: 700; margin-bottom: 1.2rem; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
         .scp-comp-list { list-style: none; padding: 0; margin: 0; font-size: 0.85rem; }
         .scp-comp-list li { margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; color: var(--scp-text-muted); }
@@ -188,7 +213,7 @@
         .scp-timeline-track::before { content: ''; position: absolute; top: 12px; left: 10px; right: 10px; height: 2px; background: var(--scp-border); z-index: 0; }
         .scp-timeline-step { position: relative; z-index: 1; text-align: center; flex: 1; }
         .scp-timeline-dot { width: 24px; height: 24px; background: #222; border: 2px solid var(--scp-border); border-radius: 50%; margin: 0 auto 10px; transition: all 0.5s; }
-        .scp-timeline-step.active .scp-timeline-dot { background: var(--scp-primary); border-color: var(--scp-primary); box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
+        .scp-timeline-step.active .scp-timeline-dot { background: var(--scp-primary); border-color: var(--scp-primary); box-shadow: 0 0 15px rgba(${primaryRgb}, 0.5); }
         .scp-timeline-year { font-size: 0.7rem; color: var(--scp-text-muted); font-weight: 600; }
         .scp-timeline-val { font-size: 0.8rem; font-weight: 700; margin-top: 5px; opacity: 0; transition: all 0.5s; transform: translateY(5px); }
         .scp-timeline-step.active .scp-timeline-val { opacity: 1; transform: translateY(0); }
@@ -235,7 +260,7 @@
             <div class="scp-glass-card">
                 <div class="scp-loading-overlay">
                     <div class="scp-spinner"></div>
-                    <p style="font-weight: 700; color: #D4AF37; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem;">Projetando seu patrimônio...</p>
+                    <p style="font-weight: 700; color: var(--scp-primary); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem;">Projetando seu patrimônio...</p>
                     <p style="font-size: 0.75rem; color: #666; margin-top: 5px;">Analisando dados de irradiação solar</p>
                 </div>
 
@@ -505,7 +530,8 @@
             });
 
             // 2. Backup Interna (API Local)
-            fetch('/api/leads', {
+            const backupUrl = apiBaseUrl ? `${apiBaseUrl}/api/leads` : '/api/leads';
+            fetch(backupUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

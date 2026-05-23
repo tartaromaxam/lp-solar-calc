@@ -2,12 +2,15 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import ProgressBar from '../../components/blog/ProgressBar';
 import ArticleCTA from '../../components/blog/ArticleCTA';
+import HighlightBox from '../../components/blog/mdx/HighlightBox';
+import StatsDisplay from '../../components/blog/mdx/StatsDisplay';
+import YouTubeEmbed from '../../components/blog/mdx/YouTubeEmbed';
 import { getPostBySlug, getPostSlugs } from '../../lib/blog';
 
 // Pre-render pages at build time
@@ -51,6 +54,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
+const components = {
+  ArticleCTA,
+  HighlightBox,
+  StatsDisplay,
+  YouTubeEmbed,
+};
+
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
   const post = getPostBySlug(resolvedParams.slug);
@@ -85,14 +95,44 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         url: 'https://solar.mavinic.com.br/assets/branding/logo-light.svg'
       }
     },
-    description: post.description
+    description: post.description,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://solar.mavinic.com.br/blog/${post.slug}`
+    }
+  };
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Início',
+        item: 'https://solar.mavinic.com.br'
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://solar.mavinic.com.br/blog'
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: `https://solar.mavinic.com.br/blog/${post.slug}`
+      }
+    ]
   };
 
   return (
     <main className="min-h-screen bg-[#0A0A0C]">
+      <ProgressBar />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([jsonLd, breadcrumbSchema]) }}
       />
       <Navbar />
 
@@ -138,23 +178,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
           {/* Article Content */}
           <div className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-white/80 prose-a:text-[#F7C843] hover:prose-a:text-[#D4AF37] prose-strong:text-white prose-blockquote:border-[#F7C843] prose-blockquote:bg-white/5 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-lg prose-img:rounded-xl">
-            <ReactMarkdown 
-              remarkPlugins={[remarkGfm]}
-              components={{
-                // Custom component rendering for <ArticleCTA />
-                p: ({node, children}) => {
-                  const hasCTA = node?.children?.some(
-                    (child: any) => child.type === 'text' && child.value && child.value.trim() === '[CTA]'
-                  );
-                  if (hasCTA) {
-                    return <ArticleCTA />;
-                  }
-                  return <p>{children}</p>;
-                }
-              }}
-            >
-              {post.content}
-            </ReactMarkdown>
+            <MDXRemote source={post.content} components={components} />
           </div>
         </div>
       </article>
