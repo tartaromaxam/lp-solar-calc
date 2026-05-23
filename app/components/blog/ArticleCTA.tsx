@@ -6,7 +6,7 @@ interface ArticleCTAProps {
 }
 
 export default function ArticleCTA({ variant = 'calculator' }: ArticleCTAProps) {
-  const WHATSAPP_NUMBER = "5544999999999";
+  const WHATSAPP_NUMBER = "5544988160797";
   const B2B_MSG = encodeURIComponent("Olá! Estava lendo o blog da Mavinic e gostaria de um orçamento para um site/solução digital para minha empresa solar.");
   
   if (variant === 'b2b') {

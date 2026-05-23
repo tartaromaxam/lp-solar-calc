@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function FloatingWhatsApp() {
   const [isVisible, setIsVisible] = useState(false);
-  const WHATSAPP_NUMBER = "5544999999999";
+  const WHATSAPP_NUMBER = "5544988160797";
   const MSG = encodeURIComponent("Olá! Estava navegando no site da Mavinic Solar e gostaria de tirar algumas dúvidas.");
 
   useEffect(() => {
