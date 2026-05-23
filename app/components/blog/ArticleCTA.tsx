@@ -66,7 +66,7 @@ export default function ArticleCTA({ variant = 'calculator' }: ArticleCTAProps) 
         <div className="flex flex-col gap-3 w-full md:w-auto shrink-0">
           <Link 
             href="/#simulador" 
-            className="bg-[#F7C843] text-[#0B1220] px-8 py-3.5 rounded-full font-bold text-center hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(247,200,67,0.3)] flex items-center justify-center gap-2"
+            className="bg-[#F7C843] !text-[#0B1220] px-8 py-3.5 rounded-full font-bold text-center hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(247,200,67,0.3)] flex items-center justify-center gap-2"
           >
             <span>Simular Agora</span>
             <ArrowRight className="w-4 h-4" />
@@ -75,7 +75,7 @@ export default function ArticleCTA({ variant = 'calculator' }: ArticleCTAProps) 
             href={`https://wa.me/${WHATSAPP_NUMBER}?text=Ol%C3%A1%2C%20estava%20lendo%20o%20blog%20da%20Mavinic%20Solar%20e%20gostaria%20de%20falar%20com%20um%20especialista.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-white/5 border border-white/10 text-white px-8 py-3.5 rounded-full font-bold text-center hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
+            className="bg-white/5 border border-white/10 !text-white px-8 py-3.5 rounded-full font-bold text-center hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
           >
             <MessageCircle className="w-4 h-4" />
             <span>Falar no WhatsApp</span>
