@@ -46,7 +46,9 @@ export default function Navbar() {
                   alt="Mavinic Solar"
                   fill
                   className="object-contain object-left"
-                  priority
+                  priority={true}
+                  loading="eager"
+                  fetchPriority="high"
                 />
               </div>
             </Link>
