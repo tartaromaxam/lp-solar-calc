@@ -5,8 +5,10 @@ import Benefits from "./components/Benefits";
 import SolarWidget from "./components/SolarWidget";
 import BehindTheScenes from "./components/BehindTheScenes";
 import Projects from "./components/Projects";
+import SocialProof from "./components/SocialProof";
 import LeadForm from "./components/LeadForm";
 import Footer from "./components/Footer";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
 
 export default function Home(): React.JSX.Element {
   return (
@@ -18,8 +20,10 @@ export default function Home(): React.JSX.Element {
       <SolarWidget />
       <BehindTheScenes />
       <Projects />
+      <SocialProof />
       <LeadForm />
       <Footer />
+      <FloatingWhatsApp />
     </main>
   );
 }

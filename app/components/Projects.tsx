@@ -1,59 +1,65 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { CheckCircle2, XCircle, ArrowRight, Laptop, Smartphone, Search, MessageSquare, Briefcase, TrendingUp } from "lucide-react";
 import Image from "next/image";
-import { CheckCircle2, TrendingDown, ArrowRight, Home, Building2, Factory } from "lucide-react";
 
-const caseStudies = [
+const comparison = [
   {
-    category: "Residencial",
-    icon: Home,
-    title: "Família Silva – São Paulo",
-    before: "850,00",
-    after: "68,00",
-    savings: "92%",
-    image: "/residential-proof.png",
-    benefits: ["Redução drástica na fatura", "Instalação em 48h", "Valorização imediata do imóvel"]
+    type: "Amador",
+    title: "A panfletagem digital",
+    icon: XCircle,
+    color: "text-red-500",
+    bgIcon: "bg-red-500/10",
+    border: "border-red-500/20 hover:border-red-500/40",
+    features: [
+      { icon: Laptop, text: "Site lento e poluído visualmente", status: "bad" },
+      { icon: MessageSquare, text: "Apenas um botão 'Fale no WhatsApp' genérico", status: "bad" },
+      { icon: Search, text: "Invisível no Google para buscas locais", status: "bad" },
+      { icon: Briefcase, text: "Leads frios pesquisando apenas preço", status: "bad" }
+    ]
   },
   {
-    category: "Comercial",
-    icon: Building2,
-    title: "Supermercado – Rio de Janeiro",
-    before: "3.200,00",
-    after: "220,00",
-    savings: "93%",
-    image: "/commercial-proof.png",
-    benefits: ["Redução de custos fixos", "Selo de empresa sustentável", "Retorno sobre investimento acelerado"]
-  },
-  {
-    category: "Industrial",
-    icon: Factory,
-    title: "Indústria Têxtil – Paraná",
-    before: "15.000,00",
-    after: "980,00",
-    savings: "93%",
-    image: "/industrial-proof.png",
-    benefits: ["Imunidade à inflação energética", "Alta produtividade com custo zero", "Sistema de alta potência"]
+    type: "Premium",
+    title: "A máquina de vendas",
+    icon: CheckCircle2,
+    color: "text-solar",
+    bgIcon: "bg-solar/10",
+    border: "border-solar/30 hover:border-solar/60 shadow-[0_0_40px_rgba(247,200,67,0.15)]",
+    features: [
+      { icon: Smartphone, text: "Design imersivo focado em mobile", status: "good" },
+      { icon: TrendingUp, text: "Calculadora solar que retém o usuário", status: "good" },
+      { icon: Search, text: "Arquitetura SEO para dominar a região", status: "good" },
+      { icon: Briefcase, text: "Leads qualificados enviados direto ao CRM", status: "good" }
+    ]
   }
 ];
 
 export default function Projects(): React.JSX.Element {
   return (
-    <section id="projetos" className="py-24 md:py-32 bg-[#0A0A0C] border-t border-white/5 relative overflow-hidden">
+    <section id="comparacao" className="py-24 md:py-32 bg-[#0A0A0C] border-t border-white/5 relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-solar/5 rounded-full blur-[150px] pointer-events-none"></div>
 
       <div className="container mx-auto max-w-[1200px] px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-20 max-w-[800px] mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/50 text-sm font-bold tracking-widest uppercase mb-6 backdrop-blur-sm"
+          >
+            <span>Por que mudar?</span>
+          </motion.div>
+
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-4xl md:text-6xl font-medium tracking-tight text-white mb-6"
           >
-            Projetos reais. <br />
-            <span className="italic font-semibold text-solar">Resultados comprovados.</span>
+            A diferença entre um site que panfleta e <span className="italic font-semibold text-solar">um site que vende.</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -62,82 +68,43 @@ export default function Projects(): React.JSX.Element {
             transition={{ delay: 0.2 }}
             className="text-white/40 text-xl font-light leading-relaxed"
           >
-            Veja como nossos clientes estão reduzindo drasticamente a conta de luz com energia solar.
+            A maioria das empresas solares perde dinheiro todos os dias com sites amadores. Veja o que acontece quando você investe em tecnologia de verdade.
           </motion.p>
         </div>
 
-        {/* Case Studies Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-24">
-          {caseStudies.map((study, i) => (
+        {/* Comparison Grid */}
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 mb-24 max-w-5xl mx-auto">
+          {comparison.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="group glass-card rounded-[40px] overflow-hidden border border-white/5 hover:border-solar/20 shadow-2xl transition-all duration-500 hover:-translate-y-2"
+              transition={{ duration: 0.6, delay: i * 0.2 }}
+              className={`glass-card rounded-[40px] p-8 md:p-12 border transition-all duration-500 relative ${item.border}`}
             >
-              {/* Image Header */}
-              <div className="relative h-64 w-full overflow-hidden">
-                <Image 
-                  src={study.image}
-                  alt={study.title}
-                  fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C] via-[#0A0A0C]/20 to-transparent"></div>
-                <div className="absolute top-6 left-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
-                  <study.icon className="w-4 h-4 text-solar" />
-                  <span className="text-white text-[10px] font-bold uppercase tracking-widest">{study.category}</span>
-                </div>
+              {/* Badge */}
+              <div className="absolute top-8 right-8">
+                <item.icon className={`w-10 h-10 ${item.color} opacity-20`} />
               </div>
 
-              {/* Content */}
-              <div className="p-8">
-                <h4 className="text-xl font-medium text-white mb-8 group-hover:text-solar transition-colors">
-                  {study.title}
-                </h4>
-
-                {/* Numbers Visualization */}
-                <div className="bg-white/5 rounded-3xl p-6 mb-8 relative">
-                  <div className="flex justify-between items-end mb-6">
-                    <div>
-                      <p className="text-white/30 text-[10px] uppercase tracking-widest mb-1">Antes</p>
-                      <p className="text-white/50 text-lg line-through font-light italic">R$ {study.before}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-solar text-[10px] uppercase tracking-widest mb-1 font-bold">Depois</p>
-                      <p className="text-white text-3xl font-bold tracking-tight">R$ {study.after}</p>
-                    </div>
-                  </div>
-                  
-                  {/* Savings Badge */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/80 border border-solar/30 w-24 h-24 rounded-full flex flex-col items-center justify-center backdrop-blur-md shadow-[0_0_30px_rgba(212,175,55,0.2)] z-20">
-                    <span className="text-solar/70 font-bold text-[9px] uppercase tracking-tighter mb-0.5">Economia</span>
-                    <span className="text-solar font-black text-2xl leading-none">{study.savings}</span>
-                  </div>
-
-                  <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      whileInView={{ width: "100%" }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1.5, delay: 0.5 }}
-                      className="h-full bg-solar"
-                    ></motion.div>
-                  </div>
-                </div>
-
-                {/* Bullets */}
-                <ul className="space-y-4 mb-2">
-                  {study.benefits.map((benefit, j) => (
-                    <li key={j} className="flex items-center gap-3 text-sm text-white/50 font-light">
-                      <CheckCircle2 className="w-4 h-4 text-solar shrink-0" />
-                      <span>{benefit}</span>
-                    </li>
-                  ))}
-                </ul>
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-6 ${item.bgIcon}`}>
+                <item.icon className={`w-6 h-6 ${item.color}`} />
               </div>
+              
+              <p className="text-white/40 uppercase tracking-widest text-xs font-bold mb-2">Integrador</p>
+              <h3 className="text-3xl font-bold text-white mb-8">{item.type}</h3>
+              
+              <ul className="space-y-6">
+                {item.features.map((feature, j) => (
+                  <li key={j} className="flex items-start gap-4">
+                    <div className={`mt-1 rounded-full p-1.5 shrink-0 ${feature.status === 'good' ? 'bg-solar/20 text-solar' : 'bg-red-500/20 text-red-500'}`}>
+                      <feature.icon className="w-4 h-4" />
+                    </div>
+                    <span className="text-white/70 text-lg leading-relaxed">{feature.text}</span>
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           ))}
         </div>
@@ -147,25 +114,25 @@ export default function Projects(): React.JSX.Element {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="text-center bg-gradient-to-br from-solar/10 via-solar/5 to-transparent rounded-[60px] p-12 md:p-20 border border-solar/10 relative overflow-hidden"
+          className="text-center bg-gradient-to-br from-[#0B1220] to-[#121E33] rounded-[60px] p-12 md:p-20 border border-solar/10 relative overflow-hidden"
         >
           <div className="absolute top-0 left-0 w-full h-full bg-radial-gradient from-solar/5 to-transparent pointer-events-none"></div>
           
           <p className="text-solar text-sm font-bold uppercase tracking-widest mb-4">
-            Esses são apenas alguns exemplos. O seu pode ser o próximo.
+            Pare de perder orçamentos para a concorrência
           </p>
           <h3 className="text-3xl md:text-5xl font-medium text-white mb-8 tracking-tight max-w-2xl mx-auto leading-tight">
-            Quer transformar sua conta assim também?
+            Quer transformar sua captação de clientes hoje?
           </h3>
           <p className="text-white/40 text-lg mb-12 max-w-xl mx-auto font-light leading-relaxed">
-            Leva menos de 1 minuto • Sem compromisso • Atendimento rápido
+            Agende uma consultoria rápida e entenda como implementar esse funil na sua empresa.
           </p>
           
           <a 
             href="#orcamento"
             className="inline-flex items-center gap-4 bg-solar text-black px-12 py-6 rounded-2xl text-xl font-black transition-all duration-500 hover:scale-105 hover:shadow-[0_30px_60px_rgba(251,191,36,0.3)] group"
           >
-            🚀 Quero minha simulação gratuita
+            🚀 Agendar Consultoria Estratégica
             <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
           </a>
         </motion.div>
