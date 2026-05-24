@@ -82,7 +82,7 @@ export default function SocialProof(): React.JSX.Element {
               </div>
               
               <p className="text-white/80 italic leading-relaxed mb-8 text-sm md:text-base">
-                "{testimonial.content}"
+                &quot;{testimonial.content}&quot;
               </p>
               
               <div className="flex items-center gap-4 border-t border-white/10 pt-6">

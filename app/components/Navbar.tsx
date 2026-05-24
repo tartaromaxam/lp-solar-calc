@@ -69,12 +69,12 @@ export default function Navbar() {
                   </LinkComponent>
                 );
               })}
-              <a
+              <Link
                 href="/#simulador"
                 className="bg-transparent border border-[#F7C843]/50 text-[#F7C843] hover:bg-[#F7C843] hover:text-[#0B1220] px-6 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300 shadow-[0_0_15px_rgba(247,200,67,0.1)] hover:shadow-[0_0_20px_rgba(247,200,67,0.4)]"
               >
                 Nossas Soluções
-              </a>
+              </Link>
             </nav>
 
             {/* Mobile Menu Toggle */}
@@ -126,13 +126,13 @@ export default function Navbar() {
                 transition={{ delay: 0.4 }}
                 className="mt-4"
               >
-                <a
+                <Link
                   href="/#simulador"
                   onClick={() => setMobileMenuOpen(false)}
                   className="bg-[#F7C843] text-[#0B1220] px-8 py-3 rounded-full text-lg font-bold tracking-wider transition-all duration-300 shadow-[0_10px_30px_rgba(247,200,67,0.3)] inline-block"
                 >
                   Nossas Soluções
-                </a>
+                </Link>
               </motion.div>
             </nav>
           </motion.div>

@@ -186,9 +186,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 <strong className="text-[#F7C843] block sm:inline">💡 Showroom Mavinic:</strong> Como este projeto foi construído: Este blog é uma demonstração real de arquitetura SEO de alta conversão. Quer dominar o Google na sua região?
               </p>
             </div>
-            <a href="/#orcamento" className="bg-[#F7C843] text-[#0B1220] px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform duration-300 shrink-0 shadow-[0_0_20px_rgba(247,200,67,0.3)]">
+            <Link href="/#orcamento" className="bg-[#F7C843] text-[#0B1220] px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform duration-300 shrink-0 shadow-[0_0_20px_rgba(247,200,67,0.3)]">
               Quero um site assim
-            </a>
+            </Link>
           </div>
 
           {/* Article Content */}
