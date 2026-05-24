@@ -6,7 +6,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Blog | Mavinic Solar',
-  description: 'Fique por dentro das novidades sobre Energia Solar, dicas de economia, e como instalar painéis fotovoltaicos em Umuarama e região.',
+  description: 'Descubra estratégias de SEO, marketing, automação e geração de leads para escalar empresas de energia solar.',
 };
 
 export default function BlogIndex() {
@@ -22,13 +22,13 @@ export default function BlogIndex() {
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#F7C843] rounded-full blur-[150px] opacity-5 pointer-events-none translate-x-1/3 -translate-y-1/2"></div>
         <div className="container mx-auto max-w-6xl relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#F7C843] text-sm font-bold tracking-widest uppercase mb-6 backdrop-blur-sm">
-            <span>Conteúdo Especializado</span>
+            <span>Showroom Tecnológico</span>
           </div>
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            Blog <span className="text-[#F7C843]">Mavinic Solar</span>
+            Blog B2B <span className="text-[#F7C843]">Mavinic Solar</span>
           </h1>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto">
-            Guias completos, dicas de economia e tudo que você precisa saber sobre a revolução da energia solar no Paraná.
+          <p className="text-xl text-white/60 max-w-3xl mx-auto leading-relaxed">
+            Descubra como integradoras solares escalam vendas com sites premium, automações, calculadoras inteligentes e as melhores estratégias de SEO do mercado.
           </p>
         </div>
       </section>

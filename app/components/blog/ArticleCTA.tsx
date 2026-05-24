@@ -53,26 +53,26 @@ export default function ArticleCTA({ variant = 'calculator' }: ArticleCTAProps) 
         <div className="flex-1">
           <div className="flex items-center gap-2 text-[#F7C843] font-bold text-sm tracking-widest uppercase mb-3">
             <Zap className="w-4 h-4" />
-            Pare de Alugar Energia
+            Automação para Empresas
           </div>
           <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
-            Descubra quanto você pode economizar.
+            Quero uma calculadora igual no meu site.
           </h3>
           <p className="text-white/70 text-sm md:text-base mb-0">
-            Use nosso simulador gratuito e veja o seu projeto solar ganhar vida em menos de 1 minuto. Sem compromisso.
+            Multiplique a captação de leads da sua empresa solar usando simuladores de alta conversão. Nós desenvolvemos para você.
           </p>
         </div>
         
         <div className="flex flex-col gap-3 w-full md:w-auto shrink-0">
           <Link 
-            href="/#simulador" 
+            href="/#orcamento" 
             className="bg-[#F7C843] !text-[#0B1220] px-8 py-3.5 rounded-full font-bold text-center hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(247,200,67,0.3)] flex items-center justify-center gap-2"
           >
-            <span>Simular Agora</span>
+            <span>Agendar Consultoria</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
           <a 
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=Ol%C3%A1%2C%20estava%20lendo%20o%20blog%20da%20Mavinic%20Solar%20e%20gostaria%20de%20falar%20com%20um%20especialista.`}
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=Ol%C3%A1%21%20Gostaria%20de%20automatizar%20a%20capta%C3%A7%C3%A3o%20da%20minha%20empresa%20solar.`}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-white/5 border border-white/10 !text-white px-8 py-3.5 rounded-full font-bold text-center hover:bg-white/10 transition-colors flex items-center justify-center gap-2"

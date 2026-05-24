@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { ArrowLeft, Calendar, Clock } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Code2 } from 'lucide-react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import ProgressBar from '../../components/blog/ProgressBar';
@@ -174,6 +174,21 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C] via-transparent to-transparent opacity-60"></div>
+          </div>
+
+          {/* Showroom B2B Alert */}
+          <div className="bg-[#F7C843]/10 border border-[#F7C843]/30 px-6 py-5 rounded-2xl mb-12 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-md">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-[#F7C843]/20 rounded-full flex items-center justify-center shrink-0">
+                <Code2 className="w-6 h-6 text-[#F7C843]" />
+              </div>
+              <p className="text-white/80 font-medium text-sm md:text-base leading-relaxed max-w-xl">
+                <strong className="text-[#F7C843] block sm:inline">💡 Showroom Mavinic:</strong> Como este projeto foi construído: Este blog é uma demonstração real de arquitetura SEO de alta conversão. Quer dominar o Google na sua região?
+              </p>
+            </div>
+            <a href="/#orcamento" className="bg-[#F7C843] text-[#0B1220] px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform duration-300 shrink-0 shadow-[0_0_20px_rgba(247,200,67,0.3)]">
+              Quero um site assim
+            </a>
           </div>
 
           {/* Article Content */}
