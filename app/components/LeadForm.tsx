@@ -74,9 +74,9 @@ export default function LeadForm(): React.JSX.Element {
           <div className="w-20 h-20 bg-solar/20 rounded-full flex items-center justify-center mx-auto mb-8">
             <CheckCircle2 className="w-10 h-10 text-solar" />
           </div>
-          <h2 className="text-3xl font-bold text-white mb-4">Simulação Solicitada!</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">Consultoria Solicitada!</h2>
           <p className="text-white/60 text-lg font-light leading-relaxed">
-            Seus dados foram recebidos. Em breve, um de nossos especialistas entrará em contato com sua simulação completa.
+            Seus dados foram recebidos. Em breve, um especialista entrará em contato para apresentar as soluções B2B ideais para escalar a sua integradora solar.
           </p>
         </motion.div>
       </section>
@@ -99,7 +99,7 @@ export default function LeadForm(): React.JSX.Element {
               viewport={{ once: true }}
               className="text-4xl md:text-6xl font-medium tracking-tight text-white mb-8 leading-[1.1]"
             >
-              Descubra quanto você <span className="italic font-semibold text-solar text-white">pode economizar</span> na sua conta de luz
+              Escale as vendas da sua <span className="italic font-semibold text-solar text-white">empresa solar</span> hoje mesmo
             </motion.h2>
             
             <motion.p 
@@ -109,7 +109,7 @@ export default function LeadForm(): React.JSX.Element {
               transition={{ delay: 0.1 }}
               className="text-white/60 text-xl font-light leading-relaxed mb-12"
             >
-              Solicite agora sua simulação gratuita e veja quanto você pode reduzir já nos próximos meses.
+              Agende uma consultoria para descobrir como nossas ferramentas e automações podem multiplicar o faturamento da sua integradora.
             </motion.p>
             
             <motion.ul 
@@ -143,7 +143,7 @@ export default function LeadForm(): React.JSX.Element {
             >
               <AlertCircle className="w-5 h-5" />
               <p className="font-medium italic">
-                Atendimento limitado por região — solicite sua simulação enquanto ainda há disponibilidade.
+                Atendimento exclusivo para o mercado B2B — vagas de consultoria limitadas.
               </p>
             </motion.div>
           </div>
@@ -210,7 +210,7 @@ export default function LeadForm(): React.JSX.Element {
                   className="w-full group relative flex items-center justify-center gap-4 bg-solar text-black py-6 rounded-2xl text-xl font-black transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_20px_60px_rgba(251,191,36,0.3)] overflow-hidden disabled:opacity-50"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-shine"></div>
-                  {loading ? "Processando..." : "🚀 Receber minha simulação agora"}
+                  {loading ? "Processando..." : "🚀 Agendar Consultoria Especializada"}
                 </button>
                 
                 <div className="flex items-center justify-center gap-2 text-[10px] text-white/20 uppercase tracking-[0.3em]">
@@ -222,10 +222,10 @@ export default function LeadForm(): React.JSX.Element {
               {/* Secondary CTA */}
               <div className="pt-10 border-t border-white/5 text-center">
                 <p className="text-white/50 text-sm font-light mb-6">
-                  Precisa de uma resposta rápida? Fale agora com um especialista 👇
+                  Precisa falar conosco com urgência? Mande uma mensagem agora 👇
                 </p>
                 <a 
-                  href="https://wa.me/5544988160797?text=Olá!%20Vi%20o%20site%20da%20Mavinic%20Solar%20e%20gostaria%20de%20solicitar%20uma%20simulação%20de%20energia%20solar." 
+                  href="https://wa.me/5544988160797?text=Olá!%20Vi%20o%20site%20da%20Mavinic%20e%20gostaria%20de%20entender%20como%20as%20soluções%20digitais%20podem%20ajudar%20minha%20empresa%20solar." 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 bg-green-500/10 hover:bg-green-500/20 text-green-500 border border-green-500/20 px-8 py-4 rounded-2xl text-sm font-bold transition-all duration-300 active:scale-95"

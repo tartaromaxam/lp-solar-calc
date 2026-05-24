@@ -32,7 +32,7 @@ export default function Hero(): React.JSX.Element {
           >
             <Zap className="w-4 h-4 text-solar animate-pulse" />
             <span className="text-solar text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase">
-              Energia Limpa & Economia Real
+              Case Real: Tecnologia & Energia Solar
             </span>
           </motion.div>
 
@@ -43,7 +43,7 @@ export default function Hero(): React.JSX.Element {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium text-white leading-[1.1] tracking-tight mb-8 max-w-[950px]"
           >
-            Sua conta de luz <span className="text-solar italic font-semibold text-white">reduzida em até 95%</span> com a inteligência da Mavinic Solar
+            Experiências digitais premium para <span className="text-solar italic font-semibold text-white">empresas solares</span> venderem mais.
           </motion.h1>
 
           {/* Subheadline */}
@@ -51,10 +51,25 @@ export default function Hero(): React.JSX.Element {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-white/60 text-lg md:text-xl lg:text-2xl font-light mb-12 max-w-[800px] leading-relaxed"
+            className="text-white/60 text-lg md:text-xl lg:text-2xl font-light mb-8 max-w-[800px] leading-relaxed"
           >
-            Descubra como transformar o sol em <span className="text-white font-medium">economia real</span> para sua casa ou empresa com projetos personalizados e instalação completa.
+            <span className="text-[#F7C843] font-medium">Este projeto é um case real de tecnologia aplicada ao mercado fotovoltaico.</span> Descubra como transformamos a presença digital de integradoras solares através de sites e calculadoras inteligentes.
           </motion.p>
+
+          {/* Ideal Para */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="flex flex-wrap justify-center items-center gap-3 md:gap-4 mb-12 max-w-[800px]"
+          >
+            <span className="text-white/40 text-sm font-medium mr-2">Ideal para:</span>
+            {["Integradoras Solares", "Empresas Fotovoltaicas", "Consultorias de Energia", "Instaladores Solares", "Franquias Solares"].map((item, i) => (
+              <span key={i} className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs md:text-sm font-medium backdrop-blur-sm">
+                {item}
+              </span>
+            ))}
+          </motion.div>
 
           {/* CTAs */}
           <motion.div 
@@ -68,19 +83,19 @@ export default function Hero(): React.JSX.Element {
               className="group relative flex items-center justify-center gap-4 bg-solar text-black px-10 sm:px-14 py-6 rounded-2xl text-lg sm:text-xl font-black transition-all duration-500 hover:scale-[1.05] hover:shadow-[0_20px_60px_rgba(251,191,36,0.4)] overflow-hidden w-full sm:w-auto"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-shine"></div>
-              🚀 Quero minha simulação gratuita
+              🚀 Ver Nossas Soluções
               <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
             </Link>
             
             <div className="flex items-center gap-4 text-white/30 text-[11px] sm:text-xs uppercase tracking-[0.2em] font-medium">
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-solar" /> Resposta rápida</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-solar" /> Alta Conversão</span>
               <span className="w-1 h-1 bg-white/20 rounded-full"></span>
-              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-solar" /> Sem compromisso</span>
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-solar" /> Design Premium</span>
             </div>
 
             <div className="flex items-center gap-6 mt-4 text-white/50 text-[10px] uppercase tracking-widest font-semibold">
-              <span className="flex items-center gap-1.5">✔ Mais de 100 clientes atendidos</span>
-              <span className="flex items-center gap-1.5">✔ Projetos personalizados</span>
+              <span className="flex items-center gap-1.5">✔ Captação de Leads</span>
+              <span className="flex items-center gap-1.5">✔ Automação Solar</span>
             </div>
           </motion.div>
 

@@ -22,7 +22,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Início", href: "/" },
-    { name: "Simulador", href: "/#simulador" },
+    { name: "Soluções", href: "/#simulador" },
     { name: "Blog", href: "/blog" },
     { name: "Contato", href: "/#orcamento" },
   ];
@@ -71,7 +71,7 @@ export default function Navbar() {
                 href="/#simulador"
                 className="bg-transparent border border-[#F7C843]/50 text-[#F7C843] hover:bg-[#F7C843] hover:text-[#0B1220] px-6 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300 shadow-[0_0_15px_rgba(247,200,67,0.1)] hover:shadow-[0_0_20px_rgba(247,200,67,0.4)]"
               >
-                Simular Economia
+                Nossas Soluções
               </a>
             </nav>
 
@@ -129,7 +129,7 @@ export default function Navbar() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="bg-[#F7C843] text-[#0B1220] px-8 py-3 rounded-full text-lg font-bold tracking-wider transition-all duration-300 shadow-[0_10px_30px_rgba(247,200,67,0.3)] inline-block"
                 >
-                  Simular Economia
+                  Nossas Soluções
                 </a>
               </motion.div>
             </nav>

@@ -6,33 +6,33 @@ import { Zap, TrendingUp, Home, Settings, Leaf } from "lucide-react";
 const benefits = [
   {
     icon: Zap,
-    title: "Economia imediata de até 95%",
-    description: "Zere o desperdício e comece a pagar apenas o mínimo obrigatório na sua fatura.",
-    highlight: "95%"
+    title: "Captação Ativa de Leads",
+    description: "Sistemas web otimizados que atraem, qualificam e convertem visitantes interessados em energia solar.",
+    highlight: "Leads"
   },
   {
     icon: TrendingUp,
-    title: "Lucro real no seu bolso",
-    description: "O sistema se paga sozinho em poucos anos. Depois disso, o que era gasto vira lucro livre.",
-    highlight: "lucro"
+    title: "Aumento Real de Vendas",
+    description: "Nossas ferramentas (como o simulador fotovoltaico) prendem a atenção e aceleram o fechamento de propostas.",
+    highlight: "Vendas"
   },
   {
     icon: Home,
-    title: "Valorização do seu patrimônio",
-    description: "Imóveis com tecnologia solar são ativos mais valiosos, sustentáveis e desejados no mercado.",
-    highlight: "patrimônio"
+    title: "Autoridade e Design Premium",
+    description: "Sua integradora precisa transmitir confiança. Entregamos a estética das maiores empresas do país.",
+    highlight: "Autoridade"
   },
   {
     icon: Settings,
-    title: "Tecnologia de ponta sem preocupação",
-    description: "Sistemas robustos com garantia de longa duração e baixíssima necessidade de manutenção.",
-    highlight: "manutenção"
+    title: "Automação Integrada",
+    description: "Os orçamentos caem diretamente no seu WhatsApp ou CRM, sem falhas e sem atrasos no atendimento.",
+    highlight: "Automação"
   },
   {
     icon: Leaf,
-    title: "Liberdade e independência",
-    description: "Produza sua própria energia limpa e proteja-se contra os constantes aumentos de tarifa.",
-    highlight: "independência"
+    title: "Domínio no Google",
+    description: "Arquitetura SEO de ponta focada em energia solar, colocando sua empresa no topo das buscas da sua região.",
+    highlight: "Google"
   }
 ];
 
@@ -52,8 +52,8 @@ export default function Benefits(): React.JSX.Element {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-6xl font-medium tracking-tight text-white mb-6"
           >
-            Por que investir em <br />
-            <span className="italic font-semibold text-solar text-white">energia solar agora?</span>
+            Nossas soluções para <br />
+            <span className="italic font-semibold text-solar text-white">sua empresa crescer</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -62,7 +62,7 @@ export default function Benefits(): React.JSX.Element {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-white/50 text-xl font-light leading-relaxed"
           >
-            Veja como você pode economizar e transformar sua conta de luz em investimento.
+            Tecnologia, design e automação criadas exclusivamente para integradores fotovoltaicos.
           </motion.p>
         </div>
 

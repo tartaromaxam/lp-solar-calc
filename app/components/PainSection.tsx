@@ -16,8 +16,8 @@ export default function PainSection(): React.JSX.Element {
             className="text-center"
           >
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-white leading-tight">
-              Por que continuar <br />
-              <span className="text-red-500/80 font-semibold italic">financiando a concessionária?</span>
+              Por que você ainda <br />
+              <span className="text-red-500/80 font-semibold italic">perde vendas para a concorrência?</span>
             </h2>
           </motion.div>
 
@@ -25,24 +25,24 @@ export default function PainSection(): React.JSX.Element {
           <div className="flex flex-col gap-8 md:gap-12">
             {[
               {
-                text: "Todo mês a mesma indignação: a conta sobe e o seu ",
-                highlight: "poder de compra",
-                after: " diminui."
+                text: "Todo mês a mesma luta: você investe pesado em anúncios, mas ",
+                highlight: "os leads chegam frios",
+                after: " ou totalmente desqualificados."
               },
               {
-                text: "Economizar no banho ou desligar o ar-condicionado não resolve o problema estrutural.",
+                text: "Mandar PDFs genéricos no WhatsApp já não convence o cliente que está prestes a investir R$40.000 em um sistema.",
                 highlight: "",
                 after: ""
               },
               {
-                text: "Você está pagando caro por algo que o ",
-                highlight: "sol te entrega de graça",
-                after: " todos os dias."
+                text: "A sua empresa parece pequena na internet, enquanto seus concorrentes usam ",
+                highlight: "experiências digitais premium",
+                after: " para fechar projetos de alto valor."
               },
               {
-                text: "A verdade é dura: cada mês sem energia solar é ",
-                highlight: "dinheiro que nunca mais volta",
-                after: " para o seu bolso."
+                text: "A verdade é dura: cada dia com um site amador é ",
+                highlight: "dinheiro sendo deixado na mesa",
+                after: " para a concorrência."
               }
             ].map((block, i) => (
               <motion.div
@@ -76,7 +76,7 @@ export default function PainSection(): React.JSX.Element {
             className="text-center pt-8 border-t border-white/5"
           >
             <p className="text-lg md:text-xl text-solar/80 font-medium tracking-wide uppercase">
-              O sol é seu. A energia também deveria ser.
+              O mercado solar amadureceu. A sua presença digital também deveria.
             </p>
             <div className="mt-4 flex justify-center">
               <motion.div 
