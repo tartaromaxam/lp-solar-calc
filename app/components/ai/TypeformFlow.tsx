@@ -128,9 +128,58 @@ export default function TypeformFlow() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [textInput, setTextInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const hasSubmitted = useRef(false);
 
   const question = QUESTIONS[currentStep];
-  const isFinished = currentStep === QUESTIONS.length;
+  const isFinished = currentStep >= QUESTIONS.length;
+
+  const submitLeadData = async (finalAnswers: Record<string, string>) => {
+    let score = 0;
+    QUESTIONS.forEach((q) => {
+      if (q.type === "options" && q.options) {
+        const selectedValue = finalAnswers[q.id];
+        const option = q.options.find((o) => o.value === selectedValue);
+        if (option && option.points !== undefined) {
+          score += option.points;
+        }
+      }
+    });
+
+    let category = "Frio";
+    if (score >= 70) category = "Quente";
+    else if (score >= 40) category = "Morno";
+
+    const payload = {
+      answers: finalAnswers,
+      score,
+      category,
+      urlOrigem: window.location.href,
+    };
+
+    console.log("Enviando lead para API", payload);
+
+    try {
+      await fetch("/api/ai-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      console.error("Erro ao submeter lead para API interna:", err);
+    }
+  };
+
+  const advanceStep = (currentAnswers: Record<string, string>) => {
+    const nextStep = currentStep + 1;
+    setCurrentStep(nextStep);
+    
+    // Se avançar para a última tela, dispara a API imperativamente
+    if (nextStep >= QUESTIONS.length && !hasSubmitted.current) {
+      console.log("Gatilho imperativo disparado! Preparando envio...");
+      hasSubmitted.current = true;
+      submitLeadData(currentAnswers);
+    }
+  };
 
   useEffect(() => {
     // Focus input on text steps
@@ -142,17 +191,21 @@ export default function TypeformFlow() {
   const handleNext = () => {
     if (question.type === "text") {
       if (!textInput.trim()) return; // Required validation
-      setAnswers((prev) => ({ ...prev, [question.id]: textInput }));
+      const newAnswers = { ...answers, [question.id]: textInput };
+      setAnswers(newAnswers);
       setTextInput("");
+      advanceStep(newAnswers);
+    } else {
+      advanceStep(answers);
     }
-    setCurrentStep((prev) => prev + 1);
   };
 
   const handleOptionSelect = (value: string) => {
-    setAnswers((prev) => ({ ...prev, [question.id]: value }));
+    const newAnswers = { ...answers, [question.id]: value };
+    setAnswers(newAnswers);
     // Pequeno delay para a transição ficar suave e perceptível
     setTimeout(() => {
-      setCurrentStep((prev) => prev + 1);
+      advanceStep(newAnswers);
     }, 300);
   };
 
@@ -160,20 +213,6 @@ export default function TypeformFlow() {
     if (e.key === "Enter" && question.type === "text" && textInput.trim()) {
       handleNext();
     }
-  };
-
-  const calculateScore = () => {
-    let score = 0;
-    QUESTIONS.forEach((q) => {
-      if (q.type === "options" && q.options) {
-        const selectedValue = answers[q.id];
-        const option = q.options.find((o) => o.value === selectedValue);
-        if (option && option.points !== undefined) {
-          score += option.points;
-        }
-      }
-    });
-    return score;
   };
 
   const renderProgress = () => {
@@ -190,8 +229,14 @@ export default function TypeformFlow() {
   };
 
   const renderResult = () => {
-    // Calculado internamente para uso futuro nas integrações (API, Planilha, etc.)
-    const score = calculateScore();
+    // Recalcula score no frontend apenas para uso visual caso necessário
+    let score = 0;
+    QUESTIONS.forEach((q) => {
+      if (q.type === "options" && q.options) {
+        const option = q.options.find((o) => o.value === answers[q.id]);
+        if (option && option.points !== undefined) score += option.points;
+      }
+    });
     let category = "Frio";
     if (score >= 70) category = "Quente";
     else if (score >= 40) category = "Morno";
@@ -312,6 +357,7 @@ export default function TypeformFlow() {
           onClick={() => {
             setAnswers({});
             setCurrentStep(0);
+            hasSubmitted.current = false;
           }}
           className="mt-6 text-sm text-white/30 hover:text-white/60 transition-colors"
         >
