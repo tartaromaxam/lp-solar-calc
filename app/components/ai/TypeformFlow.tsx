@@ -149,6 +149,7 @@ export default function TypeformFlow() {
         else if (contaNum > 500) contaValue = "501-800";
         else if (contaNum > 300) contaValue = "301-500";
         initialAnswers["conta"] = contaValue;
+        initialAnswers["conta_exata"] = urlConta;
       }
 
       if (Object.keys(initialAnswers).length > 0) {
