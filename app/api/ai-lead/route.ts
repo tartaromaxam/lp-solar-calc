@@ -16,6 +16,8 @@ export async function POST(request: Request) {
     const formatValue = (val: any) => val ? val : "Não informado";
 
     // 2. Construção do Payload completo formatado para o Make e Google Sheets
+    const valorContaExata = data.answers.conta_exata ? `R$ ${parseFloat(data.answers.conta_exata).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : "";
+    
     const payload = {
       idLead: leadId,
       dataHora: completedAt,
@@ -26,7 +28,7 @@ export async function POST(request: Request) {
       whatsapp: formatValue(data.answers.whatsapp),
       imovelProprio: formatValue(data.answers.proprio),
       tipoImovel: formatValue(data.answers.imovel),
-      faixaConta: formatValue(data.answers.conta),
+      faixaConta: valorContaExata ? valorContaExata : formatValue(data.answers.conta),
       tipoTelhado: formatValue(data.answers.telhado),
       padraoEletrico: formatValue(data.answers.padrao),
       sombreamento: formatValue(data.answers.sombreamento),

@@ -278,6 +278,10 @@ export default function TypeformFlow() {
     const completedAt = new Date().toISOString(); // Preparado para integrações futuras
 
     const getLabel = (questionId: string) => {
+      if (questionId === "conta" && answers["conta_exata"]) {
+        const valor = parseFloat(answers["conta_exata"]);
+        return isNaN(valor) ? answers["conta_exata"] : `R$ ${valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`;
+      }
       const q = QUESTIONS.find((q) => q.id === questionId);
       if (!q) return answers[questionId] || "-";
       if (q.type === "options" && q.options) {
@@ -290,8 +294,8 @@ export default function TypeformFlow() {
     const handleWhatsAppRedirect = () => {
       const phone = "5544988160797";
       
-      // Construindo a mensagem linha a linha através de um array para garantir que 
-      // nenhum caractere invisível ou tabulação quebre a codificação do URL.
+      const labelConta = answers["conta_exata"] ? "Valor Médio da Conta" : "Faixa da Conta";
+      
       const textArray = [
         "Olá!",
         "",
@@ -306,11 +310,9 @@ export default function TypeformFlow() {
         `Imóvel Próprio: ${getLabel("proprio")}`,
         `Tipo de Telhado: ${getLabel("telhado")}`,
         `Padrão Elétrico: ${getLabel("padrao")}`,
-        `Faixa da Conta: ${getLabel("conta")}`,
+        `${labelConta}: ${getLabel("conta")}`,
         `Sombreamento: ${getLabel("sombreamento")}`,
-        `Prazo de Instalação: ${getLabel("prazo")}`,
-        "",
-        "Gostaria de agendar uma avaliação técnica e receber uma estimativa personalizada para o meu imóvel."
+        `Prazo de Instalação: ${getLabel("prazo")}`
       ];
 
       const text = textArray.join("\n");
@@ -334,7 +336,7 @@ export default function TypeformFlow() {
         <p className="text-xl text-white/70 mb-4">
           Obrigado, {answers.nome?.split(" ")[0] || "cliente"}. Com base nas informações fornecidas, identificamos características compatíveis com um projeto de energia solar. Uma avaliação técnica permitirá confirmar a viabilidade e estimar o potencial de economia do imóvel.
         </p>
-
+ 
         <div className="glass-card p-6 md:p-8 rounded-2xl w-full text-left mb-2">
           <h3 className="text-xl font-bold text-white mb-4 border-b border-white/10 pb-3">Resumo da Pré-Análise</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm md:text-base text-white/80">
@@ -359,7 +361,9 @@ export default function TypeformFlow() {
               <span className="font-medium text-white">{getLabel("padrao")}</span>
             </div>
             <div>
-              <span className="block text-white/40 text-xs uppercase tracking-wider mb-1">Faixa da Conta</span>
+              <span className="block text-white/40 text-xs uppercase tracking-wider mb-1">
+                {answers["conta_exata"] ? "Valor Médio da Conta" : "Faixa da Conta"}
+              </span>
               <span className="font-medium text-white">{getLabel("conta")}</span>
             </div>
             <div>
