@@ -130,6 +130,34 @@ export default function TypeformFlow() {
   const inputRef = useRef<HTMLInputElement>(null);
   const hasSubmitted = useRef(false);
 
+  // 1. Carrega parâmetros de URL se existirem (Nome, WhatsApp, Conta)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const urlNome = params.get("nome");
+      const urlWhatsapp = params.get("whatsapp");
+      const urlConta = params.get("conta");
+
+      const initialAnswers: Record<string, string> = {};
+
+      if (urlNome) initialAnswers["nome"] = decodeURIComponent(urlNome);
+      if (urlWhatsapp) initialAnswers["whatsapp"] = decodeURIComponent(urlWhatsapp);
+      if (urlConta) {
+        const contaNum = Number(urlConta);
+        let contaValue = "ate-300";
+        if (contaNum > 800) contaValue = "acima-800";
+        else if (contaNum > 500) contaValue = "501-800";
+        else if (contaNum > 300) contaValue = "301-500";
+        initialAnswers["conta"] = contaValue;
+      }
+
+      if (Object.keys(initialAnswers).length > 0) {
+        console.log("Dados da calculadora carregados no formulário:", initialAnswers);
+        setAnswers(initialAnswers);
+      }
+    }
+  }, []);
+
   const question = QUESTIONS[currentStep];
   const isFinished = currentStep >= QUESTIONS.length;
 
@@ -169,8 +197,15 @@ export default function TypeformFlow() {
     }
   };
 
-  const advanceStep = (currentAnswers: Record<string, string>) => {
-    const nextStep = currentStep + 1;
+  const advanceStep = (currentAnswers: Record<string, string>, fromStep = currentStep) => {
+    let nextStep = fromStep + 1;
+    
+    // Pula perguntas que já vieram respondidas/pré-preenchidas pela URL
+    while (nextStep < QUESTIONS.length && currentAnswers[QUESTIONS[nextStep].id] !== undefined) {
+      console.log(`[Skip] Pulando pergunta já preenchida: ${QUESTIONS[nextStep].id}`);
+      nextStep++;
+    }
+
     setCurrentStep(nextStep);
     
     // Se avançar para a última tela, dispara a API imperativamente

@@ -276,6 +276,10 @@
                             <input type="text" id="scp-name" class="scp-input" placeholder="Ex: Marcelo Silva">
                         </div>
                         <div class="scp-field">
+                            <label>Seu WhatsApp</label>
+                            <input type="tel" id="scp-phone" class="scp-input" placeholder="Ex: (11) 99999-9999">
+                        </div>
+                        <div class="scp-field">
                             <label>Valor médio da conta (R$)</label>
                             <input type="number" id="scp-bill" class="scp-input" placeholder="Ex: 500" inputmode="numeric">
                         </div>
@@ -381,12 +385,11 @@
                         </div>
                     </div>
 
-                    <a id="scp-whatsapp-btn" href="#" target="_blank" class="scp-cta-whatsapp">
-                        <div class="scp-cta-main-text">
-                            <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/></svg>
-                            SOLICITAR PROJETO PERSONALIZADO
+                    <a id="scp-whatsapp-btn" href="#" class="scp-cta-whatsapp" style="background: var(--scp-primary); color: #000; text-align: center; justify-content: center; display: flex; flex-direction: column; align-items: center; text-decoration: none; padding: 1.5rem 1rem; border-radius: var(--scp-radius-md);">
+                        <div class="scp-cta-main-text" style="font-size: 1.25rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 10px;">
+                            RECEBER DIAGNÓSTICO SOLAR GRATUITO 🚀
                         </div>
-                        <span class="scp-cta-sub-text">Resposta imediata via WhatsApp</span>
+                        <span class="scp-cta-sub-text" style="color: rgba(0, 0, 0, 0.7); font-size: 0.85rem; font-weight: 600; margin-top: 5px;">Configure seu telhado e relógio via satélite</span>
                     </a>
                 </div>
             </div>
@@ -396,6 +399,7 @@
     // 5. ELEMENTS
     const elements = {
         name: document.getElementById('scp-name'),
+        phone: document.getElementById('scp-phone'),
         bill: document.getElementById('scp-bill'),
         btn: document.getElementById('scp-calc-btn'),
         results: document.getElementById('scp-results'),
@@ -461,14 +465,21 @@
             };
         },
 
-        validate(name, bill) {
+        validate(name, bill, phone) {
             elements.name.style.borderColor = '';
             elements.bill.style.borderColor = '';
+            elements.phone.style.borderColor = '';
             elements.error.style.display = 'none';
 
             if (!name || name.trim().split(' ').length < 2) {
                 elements.name.style.borderColor = '#ff4d4d';
                 elements.error.textContent = "Informe seu nome completo.";
+                elements.error.style.display = 'block';
+                return false;
+            }
+            if (!phone || phone.trim().length < 8) {
+                elements.phone.style.borderColor = '#ff4d4d';
+                elements.error.textContent = "Informe um WhatsApp válido.";
                 elements.error.style.display = 'block';
                 return false;
             }
@@ -505,9 +516,10 @@
         window.requestAnimationFrame(step);
     }
 
-    async function sendLead(name, bill, results) {
+    async function sendLead(name, bill, phone, results) {
         const payload = {
             nome: name,
+            whatsapp: phone,
             valor_conta: Number(bill),
             economia_mensal: Number(results.savingsMonthly),
             sistema_kwp: Number(results.kwp),
@@ -536,6 +548,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     name: name,
+                    whatsapp: phone,
                     billAmount: bill
                 })
             }).catch(err => console.error("Erro no backup interno:", err));
@@ -549,8 +562,9 @@
     elements.btn.addEventListener('click', () => {
         const name = elements.name.value;
         const bill = parseFloat(elements.bill.value);
+        const phone = elements.phone.value;
 
-        if (!Logic.validate(name, bill)) return;
+        if (!Logic.validate(name, bill, phone)) return;
 
         // Show Loading
         elements.overlay.classList.add('active');
@@ -583,12 +597,13 @@
                 }, 1000 + (i * 300));
             });
 
-            // WhatsApp Link
-            const waMsg = `Olá! Meu nome é ${name.split(' ')[0]}. Vi na calculadora que posso economizar ${Utils.formatBRL(res.savingsMonthly)}/mês e acumular ${Utils.formatBRL(res.total25y)} em 25 anos. Gostaria de uma simulação detalhada.`;
-            elements.whatsapp.href = `https://wa.me/${config.whatsapp}?text=${encodeURIComponent(waMsg)}`;
+            // Redireciona para o Diagnóstico Solar Completo
+            const targetUrl = `/demo/?nome=${encodeURIComponent(name)}&whatsapp=${encodeURIComponent(phone)}&conta=${bill}`;
+            elements.whatsapp.href = targetUrl;
+            elements.whatsapp.removeAttribute('target');
 
             // Send Lead
-            sendLead(name, bill, res);
+            sendLead(name, bill, phone, res);
 
             // Smooth Scroll
             setTimeout(() => {
