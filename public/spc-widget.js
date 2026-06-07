@@ -20,7 +20,7 @@
         producao_kwp: parseFloat(window.spc_config?.producao_kwp) || 145,
         taxa_economia: parseFloat(window.spc_config?.taxa_economia) || 0.95,
         whatsapp: window.spc_config?.whatsapp || '5544988160797',
-        webhook: window.spc_config?.webhook || 'https://hook.us2.make.com/5177ub4bdfmkujgdw811913c42mf81b3',
+        webhook: window.spc_config?.webhook || 'https://hook.us2.make.com/5177ub4bdfmkujgdw81l9l3c42mf81b3',
         cor_primaria: window.spc_config?.cor_primaria || '#D4AF37', // Gold Mavinic
         cor_secundaria: window.spc_config?.cor_secundaria || '#F5C518',
         inflacao_energetica: 0.08, // 8% ao ano
