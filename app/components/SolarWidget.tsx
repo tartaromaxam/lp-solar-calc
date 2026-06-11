@@ -32,7 +32,7 @@ export default function SolarWidget() {
 
       {/* 3. Carregamento do Widget (Equilíbrio Performance/Velocidade) */}
       <Script 
-        src="/spc-widget.js?v=1.1.4" 
+        src="/spc-widget.js?v=2.1.0" 
         strategy="afterInteractive" 
         onReady={() => {
           if (typeof window !== 'undefined' && (window as any).renderSolarWidget) {
