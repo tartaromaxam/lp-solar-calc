@@ -11,7 +11,7 @@
 - [x] Integração com Make.com e Railway.
 - [x] Implementação de tracking (DataLayer).
 
-## Milestone 3: Polimento & Produção (ACTIVE)
+## Milestone 3: Polimento & Produção (DONE)
 ### Fase 1: Ajustes Finais e SEO (COMPLETED)
 - [x] Revisar Meta Tags e SEO Scores (Solar Pro Mavinic).
 - [x] Configurar `robots.txt` e idioma (pt-BR).
@@ -27,3 +27,16 @@
 - [x] Configuração final de domínio (Vercel/Hostinger).
 - [x] Testes de carga e validação de leads em produção.
 - [x] Entrega da documentação técnica atualizada.
+
+## Milestone 4: Automação de Primeiro Contato (Evolution API) [V2.1] (ACTIVE)
+### Fase 1: Ajuste de Estrutura de Dados & Filtros (COMPLETED)
+- [x] Definir colunas adicionais de rastreabilidade (Notificação Mavinic, Data Notificação, Log de Erros) no Sheets.
+- [x] Criar e configurar a aba dedicada "Leads AI" com 20 colunas estruturadas.
+- [x] Projetar filtros de temperatura (Quente/Morno vs. Frio) no Make.com.
+- [x] Remover infraestrutura/dependência legada do Hermes Agent do repositório.
+
+### Fase 2: Integração com Evolution API (IN PROGRESS)
+- [x] Desenhar e documentar módulo HTTP da Evolution API para notificação ao celular comercial Mavinic.
+- [x] Configurar formatação do link wa.me com o pitch gerado codificado em URL.
+- [x] Implementar e documentar tratamento de erros e atualização de status no Sheets.
+- [ ] Executar testes integrados de ponta a ponta (Aguardando homologação visual no Make.com).

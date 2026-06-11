@@ -25,29 +25,18 @@ export default function LeadForm(): React.JSX.Element {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
 
-      // Envia para o Backend Interno (Vercel) e Make em paralelo
-      const results = await Promise.allSettled([
-        fetch("/api/leads", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-          signal: controller.signal
-        }),
-        fetch("https://hook.us2.make.com/5177ub4bdfmkujgdw81l9l3c42mf81b3", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-          signal: controller.signal
-        })
-      ]);
+      // Envia exclusivamente para o Backend Interno (Vercel) que salva na aba Leads Site e alerta Telegram
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+        signal: controller.signal
+      });
 
       clearTimeout(timeoutId);
 
-      // Considera sucesso se qualquer um dos dois der certo
-      const anySuccess = results.some(r => r.status === 'fulfilled' && r.value.ok);
-
-      if (anySuccess) {
-        console.log("✅ [Solar-Leads] Sucesso (pelo menos um endpoint respondeu)!");
+      if (response.ok) {
+        console.log("✅ [Solar-Leads] Sucesso (salvo localmente em Leads Site)!");
         setSubmitted(true);
       } else {
         throw new Error("Falha na conexão com os servidores");

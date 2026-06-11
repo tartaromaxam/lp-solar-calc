@@ -42,12 +42,16 @@ export async function POST(request: Request) {
     
     if (webhookUrl) {
       console.log("Enviando para Make", webhookUrl);
-      // Dispara em background para não bloquear a resposta do Frontend
-      fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).catch(err => console.error("[Make] Erro ao enviar Webhook:", err));
+      try {
+        await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        console.log("✅ Webhook enviado com sucesso!");
+      } catch (err: any) {
+        console.error("[Make] Erro ao enviar Webhook:", err.message);
+      }
     } else {
       console.warn("[Aviso] MAKE_WEBHOOK_URL não configurada. Payload gerado:", payload);
     }

@@ -20,7 +20,6 @@
         producao_kwp: parseFloat(window.spc_config?.producao_kwp) || 145,
         taxa_economia: parseFloat(window.spc_config?.taxa_economia) || 0.95,
         whatsapp: window.spc_config?.whatsapp || '5544988160797',
-        webhook: window.spc_config?.webhook || 'https://hook.us2.make.com/5177ub4bdfmkujgdw81l9l3c42mf81b3',
         cor_primaria: window.spc_config?.cor_primaria || '#D4AF37', // Gold Mavinic
         cor_secundaria: window.spc_config?.cor_secundaria || '#F5C518',
         inflacao_energetica: 0.08, // 8% ao ano
@@ -517,33 +516,10 @@
     }
 
     async function sendLead(name, bill, phone, results) {
-        const payload = {
-            nome: name,
-            whatsapp: phone,
-            valor_conta: Number(bill),
-            economia_mensal: Number(results.savingsMonthly),
-            sistema_kwp: Number(results.kwp),
-            investimento: Number(results.investment),
-            payback: Number(results.payback),
-            economia_25anos: Number(results.total25y),
-            timestamp: new Date().toISOString(),
-            origem: window.location.href,
-            utms: Utils.getUTMs(),
-            device: Utils.getDeviceInfo()
-        };
-
         try {
-            // 1. Webhook Principal (Make.com)
-            await fetch(config.webhook, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            // 2. Backup Interna (API Local)
+            // Envia dados brutos iniciais para o endpoint local /api/leads para salvar na aba Leads Site
             const backupUrl = apiBaseUrl ? `${apiBaseUrl}/api/leads` : '/api/leads';
-            fetch(backupUrl, {
+            await fetch(backupUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -551,8 +527,8 @@
                     whatsapp: phone,
                     billAmount: bill
                 })
-            }).catch(err => console.error("Erro no backup interno:", err));
-
+            });
+            if (DEBUG) console.log("Lead backup saved successfully");
         } catch (e) {
             console.error("Lead send failed", e);
         }

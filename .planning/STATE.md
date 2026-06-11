@@ -3,23 +3,27 @@
 - [x] Milestone 1: Estrutura Base e SEO
 - [x] Milestone 2: Otimização de Conversão e UI
 - [x] Milestone 3: Deploy Final e Handoff
+- [x] Milestone 4: Automação de Primeiro Contato (Evolution API) [V2.1]
+- [x] Versão 1: Mavinic Solar AI SDR Concluída
 
 ## Status Atual
-O projeto está com o design e copywriting 100% aprovados pelo usuário. A identidade visual da Mavinic foi consolidada com tons dourados premium, tipografia refinada e uma narrativa de vendas agressiva e persuasiva. O ambiente de desenvolvimento foi estabilizado após a limpeza de cache do Turbopack. Pronto para o deploy em produção.
+A implementação da **Versão 2.1** foi concluída com sucesso no repositório local e na planilha do Google Sheets. A estrutura de dados para o SDR de pré-vendas com validação humana (Human-in-the-Loop) está totalmente configurada e operacional. Criou-se a aba dedicada **"Leads AI"** com 20 colunas e adicionou-se as colunas de controle às abas legadas. O blueprint de orquestração do Make.com foi completamente documentado para importação do cliente.
 
 ### Progresso Recente
-- [x] GSD Framework inicializado.
-- [x] SEO & Metadados otimizados (pt-BR, Mavinic).
-- [x] Lógica de envio de leads resiliente (Widget e LeadForm).
-- [x] Branding Mavinic aplicado ao widget e site (Dourado/Preto).
-- [x] Upgrade de Copy em todas as seções principais.
-- [x] Ajustes de responsividade mobile concluídos.
+- [x] Homologação completa da Versão 1 de IA (Next.js LP -> Make -> Gemini -> Sheets).
+- [x] Decisão estratégica de remover o Hermes Agent do escopo atual para manter a stack serverless e mais segura.
+- [x] Aprovação do plano de implementação da Versão 2.1 com validação humana (Human-in-the-Loop).
+- [x] Criação da aba dedicada **"Leads AI"** com a estrutura correta de 20 colunas no Google Sheets.
+- [x] Adição das colunas de controle (`Notificação Mavinic`, `Data Notificação`, `Log de Erros WhatsApp`) nas abas `Leads Site` e `Leads Bot`.
+- [x] Elaboração do guia de integração detalhado para o cenário no Make.com (`make_integration_guide.md`).
+- [x] Confirmação de remoção de qualquer dependência ou arquivo legado do Hermes Agent no repositório.
 
 ### Próximos Passos Imediatos
-1. Executar build de produção (`npm run build`).
-2. Validar integração final de leads.
-3. Configuração de DNS e Deploy Vercel.
+1. Solicitar ao usuário a importação/configuração do blueprint no Make.com utilizando o guia [make_integration_guide.md](file:///d:/site-marcelo/projects/solar-energy-lp/.planning/make_integration_guide.md).
+2. Conectar a Evolution API no Make.com conforme instruções.
+3. Realizar o teste de ponta a ponta submetendo um lead qualificado pela calculadora no site.
 
 ### Notas
-- O projeto está em estágio avançado, focando agora em estabilidade para lançamento oficial.
-- O widget deve ser mantido como arquivo estático em `public/` para garantir portabilidade.
+- A chave de segurança e o Hermes Agent foram completamente descontinuados.
+- Todo o fluxo de envio direto ao lead está desativado nesta fase para permitir a auditoria interna dos pitches gerados.
+- A aba `Leads AI` agora atua como repositório canônico para dados refinados de IA e rastreabilidade da Evolution API.
